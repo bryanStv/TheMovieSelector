@@ -7,13 +7,13 @@ export const ResultadosPorName = () => {
   const { movies } = location.state || { results: [] }
   const { addFavoritas,esFavorita, eliminarFavoritas } = useFavoritas()
 
-  const handleAddToFavoritas = (movie) => {
+  /*const handleAddToFavoritas = (movie) => {
     addFavoritas(movie)
   };
 
   const handleRemoveFavoritas = (id) => {
     eliminarFavoritas(id)
-  }
+  }*/
 
   return (
     <div className="container mt-5">
@@ -49,7 +49,7 @@ export const ResultadosPorName = () => {
                   <button
                     type="button"
                     className="btn btn-primary"
-                    onClick={() => handleAddToFavoritas(movie)}
+                    onClick={() => addFavoritas(movie)}
                   >
                     Añadir a favoritas
                   </button>
@@ -57,7 +57,7 @@ export const ResultadosPorName = () => {
                   <button
                     type="button"
                     className="btn btn-primary"
-                    onClick={() => handleRemoveFavoritas(movie.id)}
+                    onClick={() => eliminarFavoritas(movie.id)}
                   >
                     Eliminar de favoritas
                   </button>

@@ -1,10 +1,12 @@
 import "./Populares.css"
 
 import { useEffect, useState } from "react";
+import { useFavoritas } from "../../context/FavoritesContext";
 
 export const Populares = () => {
     const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
     const [movies, setMovies] = useState([]);
+    const { addFavoritas,esFavorita, eliminarFavoritas } = useFavoritas()
 
     const getPopularMovies = async () => {
       try {
@@ -36,7 +38,8 @@ export const Populares = () => {
 
     return (
       <div className="container mt-5">
-        <h1 className="text-center">Películas populares</h1><br/>
+        <h1 className="text-center">Películas populares</h1>
+        <br />
         {movies.map((movie) => (
           <div className="card">
             <div className="card-header">
@@ -53,9 +56,35 @@ export const Populares = () => {
                 <p className="card-text">
                   Fecha de lanzamiento: {movie.release_date}
                 </p>
-                <a href="#" className="btn btn-primary">
-                  Detalles de la película
-                </a>
+                <div
+                  className="btn-group"
+                  role="group"
+                  aria-label="grupoBotonesPeliculas"
+                >
+                  <button type="button" className="btn btn-primary">
+                    Detalles
+                  </button>
+                  <button type="button" className="btn btn-primary">
+                    Placeholder
+                  </button>
+                  {!esFavorita(movie.id) ? (
+                    <button
+                      type="button"
+                      className="btn btn-primary"
+                      onClick={() => addFavoritas(movie)}
+                    >
+                      Añadir a favoritas
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      className="btn btn-primary"
+                      onClick={() => eliminarFavoritas(movie.id)}
+                    >
+                      Eliminar de favoritas
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
           </div>
