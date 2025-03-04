@@ -1,6 +1,7 @@
 import "./NavBar.css"
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import MovieLogo from "../../../../assets/movie-tickets-svgrepo-com.svg"
 
 export const NavBar = () => {
     const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
@@ -21,20 +22,24 @@ export const NavBar = () => {
 
         if (buscarPeli.trim() === "") return;
 
-        const results = await fetchPeliculaByTitulo(buscarPeli);
+        const movies = await fetchPeliculaByTitulo(buscarPeli);
 
-        //setMovieResultados(results)
-
-        navigate("/resultados", { state: { results } });
+        navigate("/resultados", { state: { movies } });
     }
 
 
     return (
       <nav className="navbar navbar-expand-lg bg-light">
         <div className="container-fluid">
-          <a className="navbar-brand" href="#">
+          <Link className="navbar-brand" aria-current="page" to="/">
+            <img
+              src={MovieLogo}
+              width={40}
+              height={32}
+              alt="TheMovieSelector"
+            />
             The Movie Selector
-          </a>
+          </Link>
           <button
             className="navbar-toggler"
             type="button"

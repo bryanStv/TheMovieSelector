@@ -3,12 +3,12 @@ import { useLocation } from "react-router-dom";
 
 export const ResultadosPorName = () => {
   const location = useLocation();
-  const { results } = location.state || { results: [] };
+  const { movies } = location.state || { results: [] };
 
   return (
     <div className="container mt-5">
       <h1 className="text-center">Resultados de búsqueda</h1>
-      {results.map((movie) => (
+      {movies.map((movie) => (
         <div className="card">
           <div className="card-header">
             <h2 className="text-center">{movie.title}</h2>

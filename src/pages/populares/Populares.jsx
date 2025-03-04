@@ -36,7 +36,7 @@ export const Populares = () => {
 
     return (
       <div className="container mt-5">
-        <h1 className="text-center">Películas populares actualmente</h1>
+        <h1 className="text-center">Películas populares</h1><br/>
         {movies.map((movie) => (
           <div className="card">
             <div className="card-header">
