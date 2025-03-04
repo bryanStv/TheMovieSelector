@@ -1,0 +1,16 @@
+#favoritas {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+#favoritas .favoritas-lista{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+#favoritas img{
+    width: 10em;
+}

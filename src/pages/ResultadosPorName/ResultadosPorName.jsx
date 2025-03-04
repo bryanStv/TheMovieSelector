@@ -1,15 +1,25 @@
 import "./ResultadosPorName.css"
 import { useLocation } from "react-router-dom";
+import { useFavoritas } from "../../context/FavoritesContext";
 
 export const ResultadosPorName = () => {
-  const location = useLocation();
-  const { movies } = location.state || { results: [] };
+  const location = useLocation()
+  const { movies } = location.state || { results: [] }
+  const { addFavoritas,esFavorita, eliminarFavoritas } = useFavoritas()
+
+  const handleAddToFavoritas = (movie) => {
+    addFavoritas(movie)
+  };
+
+  const handleRemoveFavoritas = (id) => {
+    eliminarFavoritas(id)
+  }
 
   return (
     <div className="container mt-5">
       <h1 className="text-center">Resultados de búsqueda</h1>
       {movies.map((movie) => (
-        <div className="card">
+        <div key={movie.id} className="card">
           <div className="card-header">
             <h2 className="text-center">{movie.title}</h2>
           </div>
@@ -24,9 +34,35 @@ export const ResultadosPorName = () => {
               <p className="card-text">
                 Fecha de lanzamiento: {movie.release_date}
               </p>
-              <a href="#" className="btn btn-primary">
-                Detalles de la película
-              </a>
+              <div
+                className="btn-group"
+                role="group"
+                aria-label="grupoBotonesPeliculas"
+              >
+                <button type="button" className="btn btn-primary">
+                  Detalles
+                </button>
+                <button type="button" className="btn btn-primary">
+                  Placeholder
+                </button>
+                {!esFavorita(movie.id) ? (
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={() => handleAddToFavoritas(movie)}
+                  >
+                    Añadir a favoritas
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={() => handleRemoveFavoritas(movie.id)}
+                  >
+                    Eliminar de favoritas
+                  </button>
+                )}
+              </div>
             </div>
           </div>
         </div>
@@ -34,3 +70,12 @@ export const ResultadosPorName = () => {
     </div>
   );
 };
+
+
+/*
+fetch('https://api.themoviedb.org/3/movie/now_playing?language=es-ES&page=1&region=ES', options)
+  .then(res => res.json())
+  .then(res => console.log(res))
+  .catch(err => console.error(err));
+
+*/
