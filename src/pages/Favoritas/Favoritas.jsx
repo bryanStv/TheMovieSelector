@@ -1,6 +1,6 @@
 import "./Favoritas.css"
 
-import { useFavoritas } from "../../context/FavoritesContext"
+import { useFavoritas } from "../../context/FavoritasContext"
 
 export const Favoritas = ({ favorites }) => {
     const { favoritas, eliminarFavoritas } = useFavoritas();

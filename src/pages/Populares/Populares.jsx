@@ -1,12 +1,15 @@
 import "./Populares.css"
 
 import { useEffect, useState } from "react";
-import { useFavoritas } from "../../context/FavoritesContext";
+import { useFavoritas } from "../../context/FavoritasContext";
+import { useNavigate } from "react-router-dom";
 
 export const Populares = () => {
     const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
     const [movies, setMovies] = useState([]);
     const { addFavoritas,esFavorita, eliminarFavoritas } = useFavoritas()
+
+    const navigate = useNavigate();
 
     const getPopularMovies = async () => {
       try {
@@ -31,6 +34,10 @@ export const Populares = () => {
         //console.log(data.results);
       }
     };
+
+    const gotoPeli = (movie) => {
+      navigate("/pelicula", { state: { movie } });
+    }
 
     useEffect(() => {
       fetchMovies();
@@ -61,7 +68,7 @@ export const Populares = () => {
                   role="group"
                   aria-label="grupoBotonesPeliculas"
                 >
-                  <button type="button" className="btn btn-primary">
+                  <button type="button" className="btn btn-primary" onClick={() => gotoPeli(movie)}>
                     Detalles
                   </button>
                   <button type="button" className="btn btn-primary">

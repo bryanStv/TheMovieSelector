@@ -1,11 +1,12 @@
 import "./ResultadosPorName.css"
-import { useLocation } from "react-router-dom";
-import { useFavoritas } from "../../context/FavoritesContext";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useFavoritas } from "../../context/FavoritasContext";
 
 export const ResultadosPorName = () => {
   const location = useLocation()
   const { movies } = location.state || { results: [] }
   const { addFavoritas,esFavorita, eliminarFavoritas } = useFavoritas()
+  const navigate = useNavigate()
 
   /*const handleAddToFavoritas = (movie) => {
     addFavoritas(movie)
@@ -14,6 +15,10 @@ export const ResultadosPorName = () => {
   const handleRemoveFavoritas = (id) => {
     eliminarFavoritas(id)
   }*/
+
+  const gotoPeli = (movie) => {
+    navigate("/pelicula", { state: { movie } });
+  };
 
   return (
     <div className="container mt-5">
@@ -39,7 +44,7 @@ export const ResultadosPorName = () => {
                 role="group"
                 aria-label="grupoBotonesPeliculas"
               >
-                <button type="button" className="btn btn-primary">
+                <button type="button" className="btn btn-primary" onClick={() => gotoPeli(movie)}>
                   Detalles
                 </button>
                 <button type="button" className="btn btn-primary">

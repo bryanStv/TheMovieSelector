@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 import { Header } from "../components/Fixed/Header/Header.jsx";
 import { Footer } from "../components/Fixed/Footer/Footer.jsx";
 import { Favoritas } from "../pages/Favoritas/Favoritas.jsx";
-import { useFavoritas } from "../context/FavoritesContext";
+import { useFavoritas } from "../context/FavoritasContext.jsx";
 
 export const Root = () => {
   const { favoritas } = useFavoritas();

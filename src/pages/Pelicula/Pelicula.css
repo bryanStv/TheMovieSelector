@@ -1,0 +1,39 @@
+/* Estilos generales */
+.pelicula {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Estilos para el título */
+.pelicula h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #343a40;
+}
+
+/* Imagen del póster */
+.pelicula img {
+    width: 100%;
+    max-width: 400px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilos para la información de la película */
+.pelicula p {
+    font-size: 1.1rem;
+    color: #495057;
+    margin-top: 10px;
+}
+
+/* Clase específica para la imagen, si se usa */
+[class^="Poster"] {
+    border: 2px solid #007bff;
+    padding: 5px;
+    background: #ffffff;
+}
