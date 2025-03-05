@@ -66,6 +66,11 @@ export const NavBar = () => {
                 Populares
               </Link>
             </li>
+            <li className="nav-item">
+              <Link to="/cartelera" className="nav-link">
+                Cartelera España
+              </Link>
+            </li>
             <li className="nav-item dropdown">
               <a
                 className="nav-link dropdown-toggle"
@@ -96,9 +101,6 @@ export const NavBar = () => {
                   </a>
                 </li>
               </ul>
-            </li>
-            <li className="nav-item">
-              <Link to="/cartelera" className="nav-link">Cartelera España</Link>
             </li>
           </ul>
           <form className="d-flex" role="search" onSubmit={handleBuscarPeli}>
