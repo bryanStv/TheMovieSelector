@@ -10,9 +10,12 @@ export const Cartelera = () => {
   const { addFavoritas,esFavorita, eliminarFavoritas } = useFavoritas()
   const navigate = useNavigate()
 
+  const [pagina, setPagina] = useState(1);
+  const [totalPaginas, setTotalPaginas] = useState(0);
+
   const fetchPeliculasCartelera = async () => {
     const response = await fetch(
-      `https://api.themoviedb.org/3/movie/now_playing?language=es-ES&region=ES&page=1&api_key=${API_KEY}`
+      `https://api.themoviedb.org/3/movie/now_playing?language=es-ES&region=ES&page=${pagina}&api_key=${API_KEY}`
     );
     const data = await response.json();
     return data.results;
@@ -22,17 +25,30 @@ export const Cartelera = () => {
     const data = await fetchPeliculasCartelera();
 
     if (data) {
+      setTotalPaginas(data.total_pages);
       setMovies(data);
     }
   };
 
-    const gotoPeli = (movie) => {
-        navigate("/pelicula", { state: { movie } });
-    };
+  const gotoPeli = (movie) => {
+      navigate("/pelicula", { state: { movie } });
+  };
+
+  const paginacionFetchSig = () => {
+    if (pagina >= 1) {
+      setPagina(pagina + 1);
+    }
+  };
+
+  const paginacionFetchAnt = () => {
+    if (pagina > 1) {
+      setPagina(pagina - 1);
+    }
+  };
 
   useEffect(() => {
     fetchMovies();
-  }, []);
+  }, [pagina]);
 
   return (
     <>
@@ -92,6 +108,30 @@ export const Cartelera = () => {
             </div>
           </div>
         ))}
+
+        <div
+          className="btn-group"
+          role="group"
+          aria-label="grupoBotonesPaginacion"
+        >
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={paginacionFetchAnt}
+            disabled={pagina <= 1}
+          >
+            Anterior
+          </button>
+
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={paginacionFetchSig}
+            disabled={pagina >= totalPaginas}
+          >
+            Siguiente
+          </button>
+        </div>
       </div>
     </>
   );

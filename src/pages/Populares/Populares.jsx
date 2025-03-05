@@ -8,13 +8,16 @@ export const Populares = () => {
     const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
     const [movies, setMovies] = useState([]);
     const { addFavoritas,esFavorita, eliminarFavoritas } = useFavoritas()
+    const [pagina, setPagina] = useState(1);
+    //let totalPaginas = 0;
+    const [totalPaginas, setTotalPaginas] = useState(0);
 
     const navigate = useNavigate();
 
     const getPopularMovies = async () => {
       try {
         const response = await fetch(
-          `https://api.themoviedb.org/3/movie/popular?language=es-ES&page=1&api_key=${API_KEY}`
+          `https://api.themoviedb.org/3/movie/popular?language=es-ES&page=${pagina}&api_key=${API_KEY}`
         );
         if (!response.ok) {
           throw new Error("Error obteniendo películas");
@@ -30,6 +33,7 @@ export const Populares = () => {
     const fetchMovies = async () => {
       const data = await getPopularMovies();
       if (data && data.results) {
+        setTotalPaginas(data.total_pages);
         setMovies(data.results);
         //console.log(data.results);
       }
@@ -39,9 +43,21 @@ export const Populares = () => {
       navigate("/pelicula", { state: { movie } });
     }
 
+    const paginacionFetchSig = () => {
+      if(pagina >= 1){
+        setPagina(pagina + 1);
+      }
+    }
+
+    const paginacionFetchAnt = () => {
+      if(pagina > 1){
+        setPagina(pagina - 1);
+      }
+    }
+
     useEffect(() => {
       fetchMovies();
-    }, []);
+    }, [pagina]);
 
     return (
       <div className="container mt-5">
@@ -68,7 +84,11 @@ export const Populares = () => {
                   role="group"
                   aria-label="grupoBotonesPeliculas"
                 >
-                  <button type="button" className="btn btn-primary" onClick={() => gotoPeli(movie)}>
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={() => gotoPeli(movie)}
+                  >
                     Detalles
                   </button>
                   <button type="button" className="btn btn-primary">
@@ -96,6 +116,30 @@ export const Populares = () => {
             </div>
           </div>
         ))}
+
+        <div
+          className="btn-group"
+          role="group"
+          aria-label="grupoBotonesPaginacion"
+        >
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={paginacionFetchAnt}
+            disabled={pagina <= 1}
+          >
+            Anterior
+          </button>
+
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={paginacionFetchSig}
+            disabled={pagina >= totalPaginas}
+          >
+            Siguiente
+          </button>
+        </div>
       </div>
     );
 }
