@@ -3,6 +3,7 @@ import "./Cartelera.css";
 import { useState, useEffect } from "react";
 import { useFavoritas } from "../../context/FavoritasContext";
 import { useNavigate } from "react-router-dom";
+import { CardPelis } from "../../components/ui/Elementos/Cards/CardPelis";
 
 export const Cartelera = () => {
   const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
@@ -37,12 +38,14 @@ export const Cartelera = () => {
   const paginacionFetchSig = () => {
     if (pagina >= 1) {
       setPagina(pagina + 1);
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 
   const paginacionFetchAnt = () => {
     if (pagina > 1) {
       setPagina(pagina - 1);
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 
@@ -53,60 +56,17 @@ export const Cartelera = () => {
   return (
     <>
       <div className="container mt-5">
-        <h1 className="text-center">Películas populares</h1>
+        <h1 className="text-center">Cartelera España</h1>
         <br />
         {movies.map((movie) => (
-          <div key={movie.id} className="card">
-            <div className="card-header">
-              <h2 className="text-center">{movie.title}</h2>
-            </div>
-            <div className="card-body row">
-              <img
-                className="col-md-2"
-                src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                alt={movie.title}
-              />
-              <div className="col-md-10">
-                <p className="card-text">{movie.overview}</p>
-                <p className="card-text">
-                  Fecha de lanzamiento: {movie.release_date}
-                </p>
-                <div
-                  className="btn-group"
-                  role="group"
-                  aria-label="grupoBotonesPeliculas"
-                >
-                  <button
-                    type="button"
-                    className="btn btn-primary"
-                    onClick={() => gotoPeli(movie)}
-                  >
-                    Detalles
-                  </button>
-                  <button type="button" className="btn btn-primary">
-                    Placeholder
-                  </button>
-                  {!esFavorita(movie.id) ? (
-                    <button
-                      type="button"
-                      className="btn btn-primary"
-                      onClick={() => addFavoritas(movie)}
-                    >
-                      Añadir a favoritas
-                    </button>
-                  ) : (
-                    <button
-                      type="button"
-                      className="btn btn-primary"
-                      onClick={() => eliminarFavoritas(movie.id)}
-                    >
-                      Eliminar de favoritas
-                    </button>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
+          <CardPelis
+            key={movie.id}
+            movie={movie}
+            gotoPeli={gotoPeli}
+            esFavorita={esFavorita}
+            addFavoritas={addFavoritas}
+            eliminarFavoritas={eliminarFavoritas}
+          />
         ))}
 
         <div

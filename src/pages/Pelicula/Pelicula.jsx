@@ -1,5 +1,6 @@
 import "./Pelicula.css"
 import { useLocation } from "react-router-dom";
+import placeholderMovieCover from "../../assets/placeholderPoster.jpg";
 
 export const Pelicula = () => {
     const location = useLocation();
@@ -11,7 +12,7 @@ export const Pelicula = () => {
         <h2>{movie.title}</h2>
         <img
           className={`Poster de ${movie.title}`}
-          src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+          src={movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : placeholderMovieCover }
           alt={movie.title}
         />
         <p>Fecha de estreno: {movie.release_date}</p>

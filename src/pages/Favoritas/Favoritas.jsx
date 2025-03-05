@@ -2,6 +2,7 @@ import "./Favoritas.css"
 
 import { useFavoritas } from "../../context/FavoritasContext"
 import { useNavigate } from "react-router-dom";
+import placeholderMovieCover from "../../assets/placeholderPoster.jpg"
 
 export const Favoritas = () => {
     const { favoritas, eliminarFavoritas } = useFavoritas();
@@ -21,7 +22,7 @@ export const Favoritas = () => {
               className="favorita-item d-flex flex-column align-items-center"
             >
               <img
-                src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                src={movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : placeholderMovieCover }
                 alt={movie.title}
               />
 
