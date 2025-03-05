@@ -1,12 +1,42 @@
 import placeholderMovieCover from "../../../../assets/placeholderPoster.jpg"
+import { useNavigate } from "react-router-dom";
+import { useFavoritas } from "../../../../context/FavoritasContext.jsx";
+
+const generosList = {
+  28: "Acción",
+  12: "Aventura",
+  16: "Animación",
+  35: "Comedia",
+  80: "Crimen",
+  99: "Documental",
+  18: "Drama",
+  10751: "Familia",
+  14: "Fantasía",
+  36: "Historia",
+  27: "Terror",
+  10402: "Música",
+  9648: "Misterio",
+  10749: "Romance",
+  878: "Ciencia ficción",
+  10770: "Película de TV",
+  53: "Suspense",
+  10752: "Bélica",
+  37: "Western",
+};
 
 export const CardPelis = ({
   movie,
-  gotoPeli,
-  esFavorita,
-  addFavoritas,
-  eliminarFavoritas,
+  //esFavorita,
+  //addFavoritas,
+  //eliminarFavoritas,
 }) => {
+  const navigate = useNavigate();
+  const { addFavoritas,esFavorita, eliminarFavoritas } = useFavoritas()
+  
+  const gotoPeli = (movie) => {
+    navigate("/pelicula", { state: { movie } });
+  };
+
   return (
     <div className="card">
       <div className="card-header">
@@ -30,8 +60,17 @@ export const CardPelis = ({
         <div className="col-md-10">
           <p className="card-text">{movie.overview}</p>
           <p className="card-text">
-            Fecha de lanzamiento: {movie.release_date}
+            <strong>Fecha de lanzamiento: </strong>
+            {movie.release_date}
           </p>
+          <span>
+            <strong>Generos: </strong>
+          </span>
+          {movie.genre_ids.map((genero) => (
+            <span key={genero} className="card-text">
+              {generosList[genero]}{" "}
+            </span>
+          ))}
         </div>
       </div>
       <div className="card-footer d-flex justify-content-center">

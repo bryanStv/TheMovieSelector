@@ -1,57 +1,24 @@
 import "./Cartelera.css";
 
-import { useState, useEffect } from "react";
-import { useFavoritas } from "../../context/FavoritasContext";
-import { useNavigate } from "react-router-dom";
+//import { useState, useEffect } from "react";
+//import { useFavoritas } from "../../context/FavoritasContext";
 import { CardPelis } from "../../components/ui/Elementos/Cards/CardPelis";
+import { useFetchTMDB } from "../../apis/useFetchTMDB";
 
 export const Cartelera = () => {
   const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
-  const [movies, setMovies] = useState([]);
-  const { addFavoritas,esFavorita, eliminarFavoritas } = useFavoritas()
-  const navigate = useNavigate()
 
-  const [pagina, setPagina] = useState(1);
-  const [totalPaginas, setTotalPaginas] = useState(0);
-
-  const fetchPeliculasCartelera = async () => {
-    const response = await fetch(
-      `https://api.themoviedb.org/3/movie/now_playing?language=es-ES&region=ES&page=${pagina}&api_key=${API_KEY}`
-    );
-    const data = await response.json();
-    return data.results;
-  };
-
-  const fetchMovies = async () => {
-    const data = await fetchPeliculasCartelera();
-
-    if (data) {
-      setTotalPaginas(data.total_pages);
-      setMovies(data);
-    }
-  };
-
-  const gotoPeli = (movie) => {
-      navigate("/pelicula", { state: { movie } });
-  };
-
-  const paginacionFetchSig = () => {
-    if (pagina >= 1) {
-      setPagina(pagina + 1);
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-  };
-
-  const paginacionFetchAnt = () => {
-    if (pagina > 1) {
-      setPagina(pagina - 1);
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-  };
-
-  useEffect(() => {
-    fetchMovies();
-  }, [pagina]);
+  const {
+    movies,
+    pagina,
+    totalPaginas,
+    paginacionFetchSig,
+    paginacionFetchAnt,
+  } = useFetchTMDB(
+    API_KEY,
+    "https://api.themoviedb.org/3/movie/now_playing",
+    "ES"
+  );
 
   return (
     <>
@@ -62,10 +29,9 @@ export const Cartelera = () => {
           <CardPelis
             key={movie.id}
             movie={movie}
-            gotoPeli={gotoPeli}
-            esFavorita={esFavorita}
-            addFavoritas={addFavoritas}
-            eliminarFavoritas={eliminarFavoritas}
+            //esFavorita={esFavorita}
+            //addFavoritas={addFavoritas}
+            //eliminarFavoritas={eliminarFavoritas}
           />
         ))}
 
@@ -96,3 +62,46 @@ export const Cartelera = () => {
     </>
   );
 };
+
+
+
+  //const [movies, setMovies] = useState([]);
+  //const { addFavoritas,esFavorita, eliminarFavoritas } = useFavoritas()
+
+  //const [pagina, setPagina] = useState(1);
+  //const [totalPaginas, setTotalPaginas] = useState(0);
+
+  /*const fetchPeliculasCartelera = async () => {
+    const response = await fetch(
+      `https://api.themoviedb.org/3/movie/now_playing?language=es-ES&region=ES&page=${pagina}&api_key=${API_KEY}`
+    );
+    const data = await response.json();
+    return data.results;
+  };
+
+  const fetchMovies = async () => {
+    const data = await fetchPeliculasCartelera();
+
+    if (data) {
+      setTotalPaginas(data.total_pages);
+      setMovies(data);
+    }
+  };
+
+  const paginacionFetchSig = () => {
+    if (pagina >= 1) {
+      setPagina(pagina + 1);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
+
+  const paginacionFetchAnt = () => {
+    if (pagina > 1) {
+      setPagina(pagina - 1);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
+
+  useEffect(() => {
+    fetchMovies();
+  }, [pagina]);*/
