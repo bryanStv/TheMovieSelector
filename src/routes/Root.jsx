@@ -17,7 +17,7 @@ export const Root = () => {
         </div>
         {favoritas.length > 0 && (
           <div className="col-md-4 d-none d-md-block">
-            <Favoritas favorites={favoritas} />
+            <Favoritas />
           </div>
         )}
       </div>

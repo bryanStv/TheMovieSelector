@@ -6,7 +6,7 @@ export const PelisFavoritasProvider = ({ children }) => {
   const [favoritas, setFavoritas] = useState([]);
 
   useEffect(() => {
-    console.log("Favoritas actualizadas:", favoritas);
+    //console.log("Favoritas actualizadas:", favoritas);
   }, [favoritas]);
 
   const addFavoritas = (movie) => {

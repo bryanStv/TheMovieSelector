@@ -1,54 +1,46 @@
-import "./Populares.css"
+import "./Cartelera.css";
 
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { useFavoritas } from "../../context/FavoritasContext";
 import { useNavigate } from "react-router-dom";
 
-export const Populares = () => {
-    const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
-    const [movies, setMovies] = useState([]);
-    const { addFavoritas,esFavorita, eliminarFavoritas } = useFavoritas()
+export const Cartelera = () => {
+  const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
+  const [movies, setMovies] = useState([]);
+  const { addFavoritas,esFavorita, eliminarFavoritas } = useFavoritas()
+  const navigate = useNavigate()
 
-    const navigate = useNavigate();
+  const fetchPeliculasCartelera = async () => {
+    const response = await fetch(
+      `https://api.themoviedb.org/3/movie/now_playing?language=es-ES&region=ES&page=1&api_key=${API_KEY}`
+    );
+    const data = await response.json();
+    return data.results;
+  };
 
-    const getPopularMovies = async () => {
-      try {
-        const response = await fetch(
-          `https://api.themoviedb.org/3/movie/popular?language=es-ES&page=1&api_key=${API_KEY}`
-        );
-        if (!response.ok) {
-          throw new Error("Error obteniendo películas");
-        }
-        const data = await response.json();
-        return data;
-      } catch (error) {
-        console.error(error);
-        return null;
-      }
-    };
+  const fetchMovies = async () => {
+    const data = await fetchPeliculasCartelera();
 
-    const fetchMovies = async () => {
-      const data = await getPopularMovies();
-      if (data && data.results) {
-        setMovies(data.results);
-        //console.log(data.results);
-      }
-    };
+    if (data) {
+      setMovies(data);
+    }
+  };
 
     const gotoPeli = (movie) => {
-      navigate("/pelicula", { state: { movie } });
-    }
+        navigate("/pelicula", { state: { movie } });
+    };
 
-    useEffect(() => {
-      fetchMovies();
-    }, []);
+  useEffect(() => {
+    fetchMovies();
+  }, []);
 
-    return (
+  return (
+    <>
       <div className="container mt-5">
         <h1 className="text-center">Películas populares</h1>
         <br />
         {movies.map((movie) => (
-          <div key={movie} className="card">
+          <div key={movie.id} className="card">
             <div className="card-header">
               <h2 className="text-center">{movie.title}</h2>
             </div>
@@ -68,7 +60,11 @@ export const Populares = () => {
                   role="group"
                   aria-label="grupoBotonesPeliculas"
                 >
-                  <button type="button" className="btn btn-primary" onClick={() => gotoPeli(movie)}>
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={() => gotoPeli(movie)}
+                  >
                     Detalles
                   </button>
                   <button type="button" className="btn btn-primary">
@@ -97,5 +93,6 @@ export const Populares = () => {
           </div>
         ))}
       </div>
-    );
-}
+    </>
+  );
+};

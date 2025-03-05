@@ -89,7 +89,7 @@ export const NavBar = () => {
               </ul>
             </li>
             <li className="nav-item">
-              <a className="nav-link disabled">Disabled</a>
+              <Link to="/cartelera" className="nav-link">Cartelera España</Link>
             </li>
           </ul>
           <form className="d-flex" role="search" onSubmit={handleBuscarPeli}>

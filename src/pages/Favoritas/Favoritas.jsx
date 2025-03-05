@@ -2,13 +2,13 @@ import "./Favoritas.css"
 
 import { useFavoritas } from "../../context/FavoritasContext"
 
-export const Favoritas = ({ favorites }) => {
+export const Favoritas = () => {
     const { favoritas, eliminarFavoritas } = useFavoritas();
     return (
       <div id="favoritas">
         <h1>favoritas({favoritas.length})</h1>
         <div className="favoritas-lista">
-          {favorites.map((movie) => (
+          {favoritas.map((movie) => (
             <div key={movie.id} className="favorita-item d-flex flex-column align-items-center">
               <img
                 src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
