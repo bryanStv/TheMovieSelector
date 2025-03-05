@@ -15,3 +15,26 @@
     width: 10em;
     height: 15em;
 }
+
+.favorita-item {
+    width: 10em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.favorita-item img {
+    width: 10em;
+    height: 15em;
+}
+
+.favorita-item .btn-group {
+    width: 10em;
+    display: flex;
+    justify-content: center;
+}
+
+.favorita-item .btn-group button {
+    flex: 1;
+    max-width: 10em;
+}

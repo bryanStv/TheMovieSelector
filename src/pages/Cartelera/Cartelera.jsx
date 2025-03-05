@@ -110,7 +110,7 @@ export const Cartelera = () => {
         ))}
 
         <div
-          className="btn-group"
+          className="btn-group d-flex justify-content-center"
           role="group"
           aria-label="grupoBotonesPaginacion"
         >

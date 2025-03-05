@@ -12,6 +12,7 @@ import { ResultadosPorName } from "../pages/ResultadosPorName/ResultadosPorName.
 import { FormularioContacto } from "../pages/FormularioContacto/FormularioContacto.jsx";
 import { Pelicula } from "../pages/Pelicula/Pelicula.jsx";
 import { Cartelera } from "../pages/Cartelera/Cartelera.jsx";
+import { PaginaError } from "../pages/PaginaError/PaginaError.jsx";
 
 export const Routes = () => {
     const router = createBrowserRouter(
@@ -23,6 +24,7 @@ export const Routes = () => {
             <Route path="/formulario-contacto" element={<FormularioContacto />} />
             <Route path="/pelicula" element={<Pelicula />}/>
             <Route path="/cartelera" element={<Cartelera />}/>
+            <Route path="*" element={<PaginaError />} />
         </Route>
       )
     );

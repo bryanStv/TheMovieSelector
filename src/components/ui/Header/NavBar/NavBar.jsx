@@ -9,12 +9,16 @@ export const NavBar = () => {
   //const [movieResultados, setMovieResultados] = useState([]);
   const navigate = useNavigate();
 
+  //const [pagina, setPagina] = useState(1);
+  //const [totalPaginas, setTotalPaginas] = useState(0);
+
   const fetchPeliculaByTitulo = async (titulo) => {
     const response = await fetch(
       `https://api.themoviedb.org/3/search/movie?query=${titulo}&language=es-ES&page=1&api_key=${API_KEY}`
     );
     const data = await response.json();
-    return data.results;
+    //return data.results;
+    return data;
   };
 
   const handleBuscarPeli = async (e) => {
@@ -24,7 +28,12 @@ export const NavBar = () => {
 
     const movies = await fetchPeliculaByTitulo(buscarPeli);
 
-    navigate("/resultados", { state: { movies } });
+    /*if(movies){
+      setTotalPaginas(movies.total_pages);
+    }*/
+
+    //navigate("/resultados", { state: { movies: movies.results, totalPaginas: totalPaginas } });
+    navigate("/resultados", {state: { movies: movies.results}});
   };
 
   return (

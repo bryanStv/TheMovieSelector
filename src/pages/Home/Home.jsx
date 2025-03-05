@@ -1,6 +1,6 @@
 //import { useEffect, useState } from "react";
 import "./Home.css"
-import MovieLogo from "../../assets/movie-tickets-svgrepo-com.svg"
+//import MovieLogo from "../../assets/movie-tickets-svgrepo-com.svg"
 
 export const Home = () => {
     return (
@@ -11,13 +11,13 @@ export const Home = () => {
               href="/"
               className="d-flex align-items-center text-dark text-decoration-none"
             >
-              <img
+              {/*<img
                 src={MovieLogo}
                 width={40}
                 height={32}
                 alt="TheMovieSelector"
-              />
-              <span className="fs-4">Bienvenido a TheMovieSelector</span>
+              />*/}
+              <span className="fs-4">Bienvenido a The Movie Selector</span>
             </a>
           </header>
 

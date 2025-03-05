@@ -64,7 +64,7 @@ export const Populares = () => {
         <h1 className="text-center">Películas populares</h1>
         <br />
         {movies.map((movie) => (
-          <div key={movie} className="card">
+          <div key={movie.id} className="card">
             <div className="card-header">
               <h2 className="text-center">{movie.title}</h2>
             </div>
@@ -118,7 +118,7 @@ export const Populares = () => {
         ))}
 
         <div
-          className="btn-group"
+          className="btn-group d-flex justify-content-center"
           role="group"
           aria-label="grupoBotonesPaginacion"
         >

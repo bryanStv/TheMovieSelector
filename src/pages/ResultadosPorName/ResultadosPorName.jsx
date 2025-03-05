@@ -5,6 +5,7 @@ import { useFavoritas } from "../../context/FavoritasContext";
 export const ResultadosPorName = () => {
   const location = useLocation()
   const { movies } = location.state || { results: [] }
+
   const { addFavoritas,esFavorita, eliminarFavoritas } = useFavoritas()
   const navigate = useNavigate()
 
@@ -44,7 +45,11 @@ export const ResultadosPorName = () => {
                 role="group"
                 aria-label="grupoBotonesPeliculas"
               >
-                <button type="button" className="btn btn-primary" onClick={() => gotoPeli(movie)}>
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={() => gotoPeli(movie)}
+                >
                   Detalles
                 </button>
                 <button type="button" className="btn btn-primary">
@@ -77,10 +82,35 @@ export const ResultadosPorName = () => {
 };
 
 
-/*
+{/*<div
+  className="btn-group"
+  role="group"
+  aria-label="grupoBotonesPaginacion"
+>
+  <button
+    type="button"
+    className="btn btn-primary"
+    onClick={paginacionFetchAnt}
+    disabled={pagina <= 1}
+  >
+    Anterior
+  </button>
+
+  <button
+    type="button"
+    className="btn btn-primary"
+    onClick={paginacionFetchSig}
+    disabled={pagina >= totalPaginas}
+  >
+    Siguiente
+  </button>
+</div>
+*/}
+
+{/*
 fetch('https://api.themoviedb.org/3/movie/now_playing?language=es-ES&page=1&region=ES', options)
   .then(res => res.json())
   .then(res => console.log(res))
   .catch(err => console.error(err));
 
-*/
+*/}
