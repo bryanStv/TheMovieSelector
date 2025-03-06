@@ -1,0 +1,20 @@
+{
+  "message.simple": "A simple message.",
+  "message.argument": "Hi, {name}! 👋",
+  "message.plural": "{count, plural, one {# item} other {# items}}",
+  "message.select": "{gender, select, male {Mr} female {Mrs} other {User}}",
+  "message.text-format": "Hi, <b>John</b>!",
+  "message.number-format": "Formatted number: {num, number, ::K}",
+  "message.currency-format": "Formatted currency: {amount, number, ::currency/USD}",
+  "message.home-welcome-title": "Welcome to The Movie Selector",
+  "message.home-welcome-text": "Using a series of utilities, you can create this jumbotron, just\nlike the one in previous versions of Bootstrap. Check out the\nexamples below for how you can remix and restyle it to your\nliking.",
+  "message.home-welcome-jumbotron": "The place for your movies",
+  "message.home-more-information-button": "More information",
+  "message.nav-home": "Home",
+  "message.nav-popular": "Popular Movies",
+  "message.nav-spain-current": "Spanish Billboard",
+  "message.nav-dropdown": "Dropdown",
+  "message.nav-dropdown-contact": "Contact",
+  "message.nav-search": "Search movies",
+  "message.nav-search-button": "Search"
+}

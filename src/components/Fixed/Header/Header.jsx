@@ -1,11 +1,11 @@
 import "./Header.css"
 import { NavBar } from "../../ui/Header/NavBar/NavBar"
 
-export const Header = () => {
+export const Header = ({ onChangeLanguage }) => {
     return (
-        <header>
+      <header>
         {/*<h1>The Movie Selector</h1>*/}
-        <NavBar />
+        <NavBar onChangeLanguage={onChangeLanguage} />
         {/*<nav>
             <ul>
                 <li><a href="#home">Home</a></li>
@@ -13,6 +13,6 @@ export const Header = () => {
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </nav>*/}
-        </header>
-    )
+      </header>
+    );
 }

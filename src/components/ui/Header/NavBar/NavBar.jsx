@@ -1,23 +1,22 @@
 import "./NavBar.css"
-import { Link, useNavigate } from "react-router-dom";
+import { Form, Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import MovieLogo from "../../../../assets/movie-tickets-svgrepo-com.svg"
+import { ButtonsSelectorLenguaje } from "../../../ui/Elementos/Buttons/ButtonsSelectorLenguaje.jsx"
+import { FormattedMessage,useIntl } from "react-intl";
 
 export const NavBar = () => {
   const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
   const [buscarPeli, setBuscarPeli] = useState("");
-  //const [movieResultados, setMovieResultados] = useState([]);
   const navigate = useNavigate();
+  const { formatMessage } = useIntl();
 
-  //const [pagina, setPagina] = useState(1);
-  //const [totalPaginas, setTotalPaginas] = useState(0);
 
   const fetchPeliculaByTitulo = async (titulo) => {
     const response = await fetch(
       `https://api.themoviedb.org/3/search/movie?query=${titulo}&language=es-ES&page=1&api_key=${API_KEY}`
     );
     const data = await response.json();
-    //return data.results;
     return data;
   };
 
@@ -28,12 +27,7 @@ export const NavBar = () => {
 
     const movies = await fetchPeliculaByTitulo(buscarPeli);
 
-    /*if(movies){
-      setTotalPaginas(movies.total_pages);
-    }*/
-
-    //navigate("/resultados", { state: { movies: movies.results, totalPaginas: totalPaginas } });
-    navigate("/resultados", {state: { movies: movies.results}});
+    navigate("/resultados", { state: { movies: movies.results } });
   };
 
   return (
@@ -58,17 +52,26 @@ export const NavBar = () => {
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
               <Link className="nav-link active" aria-current="page" to="/">
-                Inicio
+                <FormattedMessage
+                  id="message.nav-home"
+                  defaultMessage="Inicio"
+                />
               </Link>
             </li>
             <li className="nav-item">
               <Link className="nav-link" to="/populares">
-                Populares
+                <FormattedMessage
+                  id="message.nav-popular"
+                  defaultMessage="Populares"
+                />
               </Link>
             </li>
             <li className="nav-item">
               <Link to="/cartelera" className="nav-link">
-                Cartelera España
+                <FormattedMessage
+                  id="message.nav-spain-current"
+                  defaultMessage="Cartelera España"
+                />
               </Link>
             </li>
             <li className="nav-item dropdown">
@@ -79,12 +82,18 @@ export const NavBar = () => {
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                Dropdown
+                <FormattedMessage
+                  id="message.nav-dropdown"
+                  defaultMessage="Menú desplegable"
+                />
               </a>
               <ul className="dropdown-menu">
                 <li>
                   <Link to="/formulario-contacto" className="dropdown-item">
-                    Contacto
+                    <FormattedMessage
+                      id="message.nav-dropdown-contact"
+                      defaultMessage="Contacto"
+                    />
                   </Link>
                 </li>
                 <li>
@@ -103,21 +112,30 @@ export const NavBar = () => {
               </ul>
             </li>
           </ul>
+
+          <ButtonsSelectorLenguaje />
+
           <form className="d-flex" role="search" onSubmit={handleBuscarPeli}>
             <input
               className="form-control me-2"
               type="search"
-              placeholder="Buscar película"
+              placeholder={formatMessage({
+                id: "message.nav-search",
+                defaultMessage: "Buscar películas",
+              })}
               aria-label="Search"
               value={buscarPeli}
               onChange={(e) => setBuscarPeli(e.target.value)}
             />
             <button className="btn btn-outline-success" type="submit">
-              Buscar
+              <FormattedMessage
+                id="message.nav-search-button"
+                defaultMessage="Buscar"
+              />
             </button>
           </form>
         </div>
       </div>
     </nav>
   );
-}
+};

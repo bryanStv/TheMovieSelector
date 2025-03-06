@@ -1,4 +1,5 @@
 import { Outlet } from "react-router-dom";
+import { useState } from "react";
 
 import { Header } from "../components/Fixed/Header/Header.jsx";
 import { Footer } from "../components/Fixed/Footer/Footer.jsx";
@@ -7,9 +8,11 @@ import { useFavoritas } from "../context/FavoritasContext.jsx";
 
 export const Root = () => {
   const { favoritas } = useFavoritas();
+  const [locale, setLocale] = useState("es-ES");
+
   return (
     <div className="container-fluid d-flex flex-column min-vh-100">
-      <Header />
+      <Header onChangeLanguage={setLocale} />
 
       <div className="row flex-grow-1">
         <div className={favoritas.length > 0 ? "col-md-8" : "col-md-12"}>
