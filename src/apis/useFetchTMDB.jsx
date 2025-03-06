@@ -43,7 +43,7 @@ export const useFetchTMDB = (API_KEY, url, region = null) => {
 
   useEffect(() => {
     getMovies(url,region);
-  }, [pagina,url,region]);
+  }, [pagina]);
 
   return {
     movies,

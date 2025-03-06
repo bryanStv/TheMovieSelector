@@ -1,14 +1,14 @@
 import "./ResultadosPorName.css"
-import { useLocation, useNavigate } from "react-router-dom";
-import { useFavoritas } from "../../context/FavoritasContext";
+import { useLocation } from "react-router-dom";
+//import { useFavoritas } from "../../context/FavoritasContext";
 import { CardPelis } from "../../components/ui/Elementos/Cards/CardPelis";
 
 export const ResultadosPorName = () => {
   const location = useLocation()
   const { movies } = location.state || { results: [] }
 
-  const { addFavoritas,esFavorita, eliminarFavoritas } = useFavoritas()
-  const navigate = useNavigate()
+  //const { addFavoritas,esFavorita, eliminarFavoritas } = useFavoritas()
+  //const navigate = useNavigate()
 
   /*const handleAddToFavoritas = (movie) => {
     addFavoritas(movie)
@@ -18,9 +18,9 @@ export const ResultadosPorName = () => {
     eliminarFavoritas(id)
   }*/
 
-  const gotoPeli = (movie) => {
+  /*const gotoPeli = (movie) => {
     navigate("/pelicula", { state: { movie } });
-  };
+  };*/
 
   return (
     <div className="container mt-5">
@@ -29,10 +29,10 @@ export const ResultadosPorName = () => {
         <CardPelis
           key={movie.id}
           movie={movie}
-          gotoPeli={gotoPeli}
-          esFavorita={esFavorita}
-          addFavoritas={addFavoritas}
-          eliminarFavoritas={eliminarFavoritas}
+          //gotoPeli={gotoPeli}
+          //esFavorita={esFavorita}
+          //addFavoritas={addFavoritas}
+          //eliminarFavoritas={eliminarFavoritas}
         />
       ))}
     </div>

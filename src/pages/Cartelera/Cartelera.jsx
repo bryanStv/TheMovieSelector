@@ -4,6 +4,7 @@ import "./Cartelera.css";
 //import { useFavoritas } from "../../context/FavoritasContext";
 import { CardPelis } from "../../components/ui/Elementos/Cards/CardPelis";
 import { useFetchTMDB } from "../../apis/useFetchTMDB";
+import { ButtonsPagination } from "../../components/ui/Elementos/Buttons/ButtonsPaginacion";
 
 export const Cartelera = () => {
   const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
@@ -35,29 +36,13 @@ export const Cartelera = () => {
           />
         ))}
 
-        <div
-          className="btn-group d-flex justify-content-center"
-          role="group"
-          aria-label="grupoBotonesPaginacion"
-        >
-          <button
-            type="button"
-            className="btn btn-primary"
-            onClick={paginacionFetchAnt}
-            disabled={pagina <= 1}
-          >
-            Anterior
-          </button>
+        <ButtonsPagination
+          pagina={pagina}
+          totalPaginas={totalPaginas}
+          paginacionFetchSig={paginacionFetchSig}
+          paginacionFetchAnt={paginacionFetchAnt}
+        />
 
-          <button
-            type="button"
-            className="btn btn-primary"
-            onClick={paginacionFetchSig}
-            disabled={pagina >= totalPaginas}
-          >
-            Siguiente
-          </button>
-        </div>
       </div>
     </>
   );

@@ -3,6 +3,7 @@ import "./Populares.css"
 //import { useEffect, useState } from "react";
 import { CardPelis } from "../../components/ui/Elementos/Cards/CardPelis";
 import { useFetchTMDB } from "../../apis/useFetchTMDB";
+import { ButtonsPagination } from "../../components/ui/Elementos/Buttons/ButtonsPaginacion";
 
 export const Populares = () => {
     const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
@@ -32,29 +33,13 @@ export const Populares = () => {
           />
         ))}
 
-        <div
-          className="btn-group d-flex justify-content-center"
-          role="group"
-          aria-label="grupoBotonesPaginacion"
-        >
-          <button
-            type="button"
-            className="btn btn-primary"
-            onClick={paginacionFetchAnt}
-            disabled={pagina <= 1}
-          >
-            Anterior
-          </button>
-
-          <button
-            type="button"
-            className="btn btn-primary"
-            onClick={paginacionFetchSig}
-            disabled={pagina >= totalPaginas}
-          >
-            Siguiente
-          </button>
-        </div>
+        <ButtonsPagination
+          pagina={pagina}
+          totalPaginas={totalPaginas}
+          paginacionFetchSig={paginacionFetchSig}
+          paginacionFetchAnt={paginacionFetchAnt}
+        />
+        
       </div>
     );
 }
@@ -105,3 +90,31 @@ export const Populares = () => {
     useEffect(() => {
       fetchMovies();
     }, [pagina]);*/
+
+
+    /*
+<div
+          className="btn-group d-flex justify-content-center"
+          role="group"
+          aria-label="grupoBotonesPaginacion"
+        >
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={paginacionFetchAnt}
+            disabled={pagina <= 1}
+          >
+            Anterior
+          </button>
+
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={paginacionFetchSig}
+            disabled={pagina >= totalPaginas}
+          >
+            Siguiente
+          </button>
+        </div>
+
+    */
