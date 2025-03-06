@@ -1,7 +1,6 @@
 import "./Cartelera.css";
 
-//import { useState, useEffect } from "react";
-//import { useFavoritas } from "../../context/FavoritasContext";
+import { FormattedMessage } from "react-intl";
 import { CardPelis } from "../../components/ui/Elementos/Cards/CardPelis";
 import { useFetchTMDB } from "../../apis/useFetchTMDB";
 import { ButtonsPagination } from "../../components/ui/Elementos/Buttons/ButtonsPaginacion";
@@ -24,15 +23,17 @@ export const Cartelera = () => {
   return (
     <>
       <div className="container mt-5">
-        <h1 className="text-center">Cartelera España</h1>
+        <h1 className="text-center">
+          <FormattedMessage
+            id="message.Billboard-title"
+            defaultMessage="Cartelera España"
+          />
+        </h1>
         <br />
         {movies.map((movie) => (
           <CardPelis
             key={movie.id}
             movie={movie}
-            //esFavorita={esFavorita}
-            //addFavoritas={addFavoritas}
-            //eliminarFavoritas={eliminarFavoritas}
           />
         ))}
 
@@ -42,51 +43,7 @@ export const Cartelera = () => {
           paginacionFetchSig={paginacionFetchSig}
           paginacionFetchAnt={paginacionFetchAnt}
         />
-
       </div>
     </>
   );
 };
-
-
-
-  //const [movies, setMovies] = useState([]);
-  //const { addFavoritas,esFavorita, eliminarFavoritas } = useFavoritas()
-
-  //const [pagina, setPagina] = useState(1);
-  //const [totalPaginas, setTotalPaginas] = useState(0);
-
-  /*const fetchPeliculasCartelera = async () => {
-    const response = await fetch(
-      `https://api.themoviedb.org/3/movie/now_playing?language=es-ES&region=ES&page=${pagina}&api_key=${API_KEY}`
-    );
-    const data = await response.json();
-    return data.results;
-  };
-
-  const fetchMovies = async () => {
-    const data = await fetchPeliculasCartelera();
-
-    if (data) {
-      setTotalPaginas(data.total_pages);
-      setMovies(data);
-    }
-  };
-
-  const paginacionFetchSig = () => {
-    if (pagina >= 1) {
-      setPagina(pagina + 1);
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-  };
-
-  const paginacionFetchAnt = () => {
-    if (pagina > 1) {
-      setPagina(pagina - 1);
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-  };
-
-  useEffect(() => {
-    fetchMovies();
-  }, [pagina]);*/

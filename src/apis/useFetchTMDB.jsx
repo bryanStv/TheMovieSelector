@@ -1,17 +1,24 @@
 import { useEffect, useState } from "react";
+import { useIntl } from "react-intl";
 
 export const useFetchTMDB = (API_KEY, url, region = null) => {
   const [movies, setMovies] = useState([]);
   const [pagina, setPagina] = useState(1);
   const [totalPaginas, setTotalPaginas] = useState(0);
+  const { formatMessage } = useIntl();
+  const [idioma,setIdioma] = useState("es-ES");
+
+  useEffect(() => {
+    setIdioma(
+      formatMessage({ id: "message.API-movies-lan", defaultMessage: "es-ES" })
+    );
+  }, [formatMessage]);
 
   const getMovies = async (url,region) => {
     try {
       const regionParametro = region ? `&region=${region}` : "";
       const response = await fetch(
-        //`https://api.themoviedb.org/3/movie/popular?language=es-ES&page=${pagina}&api_key=${API_KEY}` populares
-        //`https://api.themoviedb.org/3/movie/now_playing?language=es-ES&region=ES&page=${pagina}&api_key=${API_KEY}` cartelera
-        `${url}?language=es-ES&page=${pagina}&api_key=${API_KEY}${regionParametro}`
+        `${url}?language=${idioma}&page=${pagina}&api_key=${API_KEY}${regionParametro}`
       );
       if (!response.ok) {
         throw new Error("Error obteniendo películas");
@@ -43,7 +50,7 @@ export const useFetchTMDB = (API_KEY, url, region = null) => {
 
   useEffect(() => {
     getMovies(url,region);
-  }, [pagina]);
+  }, [pagina,idioma]);
 
   return {
     movies,

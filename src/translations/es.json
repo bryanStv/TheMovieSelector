@@ -16,5 +16,15 @@
   "message.nav-dropdown": "Menú desplegable",
   "message.nav-dropdown-contact": "Contacto",
   "message.nav-search": "Buscar películas",
-  "message.nav-search-button": "Buscar"
+  "message.nav-search-button": "Buscar",
+  "message.CardMovies-launchDate": "Fecha de lanzamiento: ",
+  "message.CardMovies-genres": "Generos: ",
+  "message.CardMovies-details": "Detalles",
+  "message.CardMovies-addFavorites": "Añadir a favoritas",
+  "message.CardMovies-removeFavorites": "Eliminar de favoritas",
+  "message.Popular-title": "Películas Populares",
+  "message.Billboard-title": "Cartelera España",
+  "message.Pagination-prev": "Anterior",
+  "message.Pagination-next": "Siguiente",
+  "message.API-movies-lan": "es-ES"
 }

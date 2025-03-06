@@ -1,6 +1,7 @@
 import placeholderMovieCover from "../../../../assets/placeholderPoster.jpg"
 import { useNavigate } from "react-router-dom";
 import { useFavoritas } from "../../../../context/FavoritasContext.jsx";
+import { FormattedMessage } from "react-intl";
 
 const generosList = {
   28: "Acción",
@@ -60,11 +61,21 @@ export const CardPelis = ({
         <div className="col-md-10">
           <p className="card-text">{movie.overview}</p>
           <p className="card-text">
-            <strong>Fecha de lanzamiento: </strong>
+            <strong>
+              <FormattedMessage
+                id="message.CardMovies-launchDate"
+                defaultMessage="Fecha de lanzamiento:"
+              />
+            </strong>
             {movie.release_date}
           </p>
           <span>
-            <strong>Generos: </strong>
+            <strong>
+              <FormattedMessage
+                id="message.CardMovies-genres"
+                defaultMessage="Generos:"
+              />
+            </strong>
           </span>
           {movie.genre_ids.map((genero) => (
             <span key={genero} className="card-text">
@@ -84,7 +95,10 @@ export const CardPelis = ({
             className="btn btn-primary"
             onClick={() => gotoPeli(movie)}
           >
-            Detalles
+            <FormattedMessage
+              id="message.CardMovies-details"
+              defaultMessage="Detalles"
+            />
           </button>
           <button type="button" className="btn btn-primary">
             Placeholder
@@ -95,7 +109,10 @@ export const CardPelis = ({
               className="btn btn-primary"
               onClick={() => addFavoritas(movie)}
             >
-              Añadir a favoritas
+              <FormattedMessage
+                id="message.CardMovies-addFavorites"
+                defaultMessage="Añadir a favoritas"
+              />
             </button>
           ) : (
             <button
@@ -103,7 +120,10 @@ export const CardPelis = ({
               className="btn btn-primary"
               onClick={() => eliminarFavoritas(movie.id)}
             >
-              Eliminar de favoritas
+              <FormattedMessage
+                id="message.CardMovies-removeFavorites"
+                defaultMessage="Eliminar de favoritas"
+              />
             </button>
           )}
         </div>

@@ -16,5 +16,15 @@
   "message.nav-dropdown": "Dropdown",
   "message.nav-dropdown-contact": "Contact",
   "message.nav-search": "Search movies",
-  "message.nav-search-button": "Search"
+  "message.nav-search-button": "Search",
+  "message.CardMovies-launchDate": "Release date: ",
+  "message.CardMovies-genres": "Genres: ",
+  "message.CardMovies-details": "Details",
+  "message.CardMovies-addFavorites": "Add to favorites",
+  "message.CardMovies-removeFavorites": "Remove from favorites",
+  "message.Popular-title": "Popular Movies",
+  "message.Billboard-title": "Spanish Billboard",
+  "message.Pagination-prev": "Previous",
+  "message.Pagination-next": "Next",
+  "message.API-movies-lan": "en-US"
 }
