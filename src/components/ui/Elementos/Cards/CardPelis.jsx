@@ -100,9 +100,6 @@ export const CardPelis = ({
               defaultMessage="Detalles"
             />
           </button>
-          <button type="button" className="btn btn-primary">
-            Placeholder
-          </button>
           {!esFavorita(movie.id) ? (
             <button
               type="button"
