@@ -20,6 +20,7 @@
   "message.Pagination-prev": "Previous",
   "message.Pagination-next": "Next",
   "message.API-movies-lan": "en-US",
+  "message.results-search-title": "Search results",
   "genre.action": "Action",
   "genre.adventure": "Adventure",
   "genre.animation": "Animation",
@@ -38,5 +39,6 @@
   "genre.tv": "TV Movie",
   "genre.thriller": "Thriller",
   "genre.war": "War",
-  "genre.western": "Western"
+  "genre.western": "Western",
+  "genre.empty": "There are no available genres"
 }

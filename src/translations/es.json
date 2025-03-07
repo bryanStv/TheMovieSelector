@@ -20,6 +20,7 @@
   "message.Pagination-prev": "Anterior",
   "message.Pagination-next": "Siguiente",
   "message.API-movies-lan": "es-ES",
+  "message.results-search-title" : "Resultados de búsqueda",
   "genre.action": "Acción",
   "genre.adventure": "Aventura",
   "genre.animation": "Animación",
@@ -38,5 +39,6 @@
   "genre.tv": "Película de TV",
   "genre.thriller": "Suspense",
   "genre.war": "Bélica",
-  "genre.western": "Western"
+  "genre.western": "Western",
+  "genre.empty": "No hay géneros disponibles"
 }

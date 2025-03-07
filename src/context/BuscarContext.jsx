@@ -13,6 +13,7 @@ export const BuscarProvider = ({ children }) => {
     const navigate = useNavigate();
     const { formatMessage } = useIntl();
     const [idioma, setIdioma] = useState("es-ES");
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
     setIdioma(
@@ -23,42 +24,73 @@ export const BuscarProvider = ({ children }) => {
     );
     }, [formatMessage]);
 
-    const fetchPeliculaByTitulo = async () => {
+    const fetchPeliculaByTitulo = async (pagina = 1) => {
         if (!query.trim()) return;
-        try {
-            const response = await fetch(
-            `https://api.themoviedb.org/3/search/movie?query=${query}&language=${idioma}&page=${pagina}&api_key=${API_KEY}`
-            );
-            if (!response.ok) {
-            throw new Error("Error obteniendo películas");
-            }
-            const data = await response.json();
-            setMovies(data.results);
-            setTotalPaginas(data.total_pages);
 
-            navigate("/resultados", {
-                replace: true,
-                state: {
-                movies: data.results,
-                totalPaginas: data.total_pages,
-                pagina: pagina,
-                query: query,
-                idioma: idioma,
-                },
-            });
+        setLoading(true)
+
+        try {
+          const response = await fetch(
+            `https://api.themoviedb.org/3/search/movie?query=${query}&language=${idioma}&page=${pagina}&api_key=${API_KEY}`
+          );
+          if (!response.ok) {
+            throw new Error("Error obteniendo películas");
+          }
+          const data = await response.json();
+          setMovies(data.results);
+          setTotalPaginas(data.total_pages);
+
+          navigate("/resultados", {
+            replace: true,
+            state: {
+              movies: data.results,
+              totalPaginas: data.total_pages,
+              pagina: pagina,
+              query: query,
+              idioma: idioma,
+            },
+          });
         } catch (error) {
-            console.error(error);
+          console.error(error);
+        } finally {
+          setLoading(false);
+        }
+    };
+
+
+    const paginacionFetchSig = () => {
+        if (pagina < totalPaginas) {
+            console.log("pagina: " + pagina);
+            console.log("idioma: " + idioma);
+            const nuevaPagina = pagina + 1;
+            setPagina(nuevaPagina);
+            fetchPeliculaByTitulo(nuevaPagina);
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+    };
+
+    const paginacionFetchAnt = () => {
+        if (pagina > 1) {
+            console.log("pagina: " + pagina);
+            console.log("idioma: " + idioma);
+            const nuevaPagina = pagina - 1;
+            setPagina(nuevaPagina);
+            fetchPeliculaByTitulo(nuevaPagina);
+            window.scrollTo({ top: 0, behavior: "smooth" });
         }
     };
 
     useEffect(() => {
         const timer = setTimeout(fetchPeliculaByTitulo, 100);
+        setPagina(1);
+        console.log("pagina: " + pagina);
+        console.log("idioma: " + idioma);
         return () => clearTimeout(timer);
-    }, [query, pagina]);
+    },[query,idioma]);
 
 
     return (
-    <BuscarContext.Provider
+        <BuscarContext.Provider
         value={{
         query,
         setQuery,
@@ -68,6 +100,8 @@ export const BuscarProvider = ({ children }) => {
         setPagina,
         totalPaginas,
         setTotalPaginas,
+        paginacionFetchAnt,
+        paginacionFetchSig,
         }}
     >
         {children}
@@ -76,3 +110,47 @@ export const BuscarProvider = ({ children }) => {
 };
 
 export const useBuscarContext = () => useContext(BuscarContext);
+
+    {
+      /*<BuscarContext.Provider
+        value={{
+        query,
+        setQuery,
+        movies,
+        setMovies,
+        pagina,
+        setPagina,
+        totalPaginas,
+        setTotalPaginas,
+        paginacionFetchAnt,
+        paginacionFetchSig,
+        }}
+    >
+        {children}
+    </BuscarContext.Provider>*/
+    }
+
+    {
+      /*
+        <BuscarContext.Provider
+            value={{
+                query,
+                setQuery,
+                movies,
+                setMovies,
+                pagina,
+                setPagina,
+                totalPaginas,
+                setTotalPaginas,
+                paginacionFetchAnt,
+                paginacionFetchSig,
+            }}
+        >
+            {loading ? (
+                <div>Loading...</div>  // Aquí puedes colocar un spinner o cualquier mensaje
+            ) : (
+                children
+            )}
+        </BuscarContext.Provider>
+         */
+    }

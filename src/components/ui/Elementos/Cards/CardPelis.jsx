@@ -100,12 +100,20 @@ export const CardPelis = ({
               />
             </strong>
           </span>
-          {movie.genre_ids.map((genero) => (
-            <span key={genero} className="card-text">
-              {/*{generosList[genero]}{" "}*/}
-              {generosList[genero] || ""}{" "}
+          {Array.isArray(movie.genre_ids) && movie.genre_ids.length > 0 ? (
+            movie.genre_ids.map((genero) => (
+              <span key={genero} className="card-text">
+                {generosList[genero] || ""}{" "}
+              </span>
+            ))
+          ) : (
+            <span className="card-text">
+              <FormattedMessage
+                id="genre.empty"
+                defaultMessage="No hay géneros disponibles"
+              />
             </span>
-          ))}
+          )}
         </div>
       </div>
       <div className="card-footer d-flex justify-content-center">

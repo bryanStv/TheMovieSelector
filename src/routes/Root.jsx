@@ -14,7 +14,7 @@ export const Root = () => {
   return (
     <BuscarProvider>
       <div className="container-fluid d-flex flex-column min-vh-100">
-        <Header onChangeLanguage={setLocale} />
+        {locale && <Header onChangeLanguage={setLocale} />}
 
         <div className="row flex-grow-1">
           <div className={favoritas.length > 0 ? "col-md-8" : "col-md-12"}>
