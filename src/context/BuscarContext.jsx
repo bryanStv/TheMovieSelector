@@ -13,7 +13,7 @@ export const BuscarProvider = ({ children }) => {
     const navigate = useNavigate();
     const { formatMessage } = useIntl();
     const [idioma, setIdioma] = useState("es-ES");
-    const [loading, setLoading] = useState(false);
+    //const [loading, setLoading] = useState(false);
 
     useEffect(() => {
     setIdioma(
@@ -27,7 +27,7 @@ export const BuscarProvider = ({ children }) => {
     const fetchPeliculaByTitulo = async (pagina = 1) => {
         if (!query.trim()) return;
 
-        setLoading(true)
+        //setLoading(true)
 
         try {
           const response = await fetch(
@@ -52,9 +52,9 @@ export const BuscarProvider = ({ children }) => {
           });
         } catch (error) {
           console.error(error);
-        } finally {
+        }/* finally {
           setLoading(false);
-        }
+        }*/
     };
 
 
