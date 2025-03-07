@@ -1,9 +1,9 @@
 import placeholderMovieCover from "../../../../assets/placeholderPoster.jpg"
 import { useNavigate } from "react-router-dom";
 import { useFavoritas } from "../../../../context/FavoritasContext.jsx";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
-const generosList = {
+/*const generosList = {
   28: "Acción",
   12: "Aventura",
   16: "Animación",
@@ -23,7 +23,7 @@ const generosList = {
   53: "Suspense",
   10752: "Bélica",
   37: "Western",
-};
+};*/
 
 export const CardPelis = ({
   movie,
@@ -33,6 +33,29 @@ export const CardPelis = ({
 }) => {
   const navigate = useNavigate();
   const { addFavoritas,esFavorita, eliminarFavoritas } = useFavoritas()
+  const {formatMessage} = useIntl();
+
+  const generosList = {
+    28: formatMessage({ id: "genre.action", defaultMessage: "Acción" }),
+    12: formatMessage({ id: "genre.adventure", defaultMessage: "Aventura" }),
+    16: formatMessage({ id: "genre.animation", defaultMessage: "Animación" }),
+    35: formatMessage({ id: "genre.comedy", defaultMessage: "Comedia" }),
+    80: formatMessage({ id: "genre.crime", defaultMessage: "Crimen" }),
+    99: formatMessage({id: "genre.documentary",defaultMessage: "Documental",}),
+    18: formatMessage({ id: "genre.drama", defaultMessage: "Drama" }),
+    10751: formatMessage({ id: "genre.family", defaultMessage: "Familia" }),
+    14: formatMessage({ id: "genre.fantasy", defaultMessage: "Fantasía" }),
+    36: formatMessage({ id: "genre.history", defaultMessage: "Historia" }),
+    27: formatMessage({ id: "genre.horror", defaultMessage: "Terror" }),
+    10402: formatMessage({ id: "genre.music", defaultMessage: "Música" }),
+    9648: formatMessage({ id: "genre.mystery", defaultMessage: "Misterio" }),
+    10749: formatMessage({ id: "genre.romance", defaultMessage: "Romance" }),
+    878: formatMessage({id: "genre.scifi",defaultMessage: "Ciencia ficción",}),
+    10770: formatMessage({id: "genre.tv",defaultMessage: "Película de TV",}),
+    53: formatMessage({ id: "genre.thriller", defaultMessage: "Suspense" }),
+    10752: formatMessage({ id: "genre.war", defaultMessage: "Bélica" }),
+    37: formatMessage({ id: "genre.western", defaultMessage: "Western" }),
+  };
   
   const gotoPeli = (movie) => {
     navigate("/pelicula", { state: { movie } });
@@ -79,7 +102,8 @@ export const CardPelis = ({
           </span>
           {movie.genre_ids.map((genero) => (
             <span key={genero} className="card-text">
-              {generosList[genero]}{" "}
+              {/*{generosList[genero]}{" "}*/}
+              {generosList[genero] || ""}{" "}
             </span>
           ))}
         </div>

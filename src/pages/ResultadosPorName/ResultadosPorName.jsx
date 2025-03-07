@@ -1,74 +1,33 @@
 import "./ResultadosPorName.css"
 import { useLocation } from "react-router-dom";
-//import { useFavoritas } from "../../context/FavoritasContext";
 import { CardPelis } from "../../components/ui/Elementos/Cards/CardPelis";
+//import { ButtonsPagination } from "../../components/ui/Elementos/Buttons/ButtonsPaginacion";
+//import { useSearchFetchTMDB } from "../../apis/useSearchFetchTMDB";
 
 export const ResultadosPorName = () => {
+  const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
   const location = useLocation()
-  const { movies } = location.state || { results: [] }
+  const movies = location.state?.movies || [];
+  //const { pagina,totalPaginas,paginacionFetchAnt,paginacionFetchSig } = useSearchFetchTMDB(API_KEY);
 
-  //const { addFavoritas,esFavorita, eliminarFavoritas } = useFavoritas()
-  //const navigate = useNavigate()
-
-  /*const handleAddToFavoritas = (movie) => {
-    addFavoritas(movie)
-  };
-
-  const handleRemoveFavoritas = (id) => {
-    eliminarFavoritas(id)
-  }*/
-
-  /*const gotoPeli = (movie) => {
-    navigate("/pelicula", { state: { movie } });
-  };*/
 
   return (
     <div className="container mt-5">
       <h1 className="text-center">Resultados de búsqueda</h1>
+      {/*{console.log(movies)}*/}
       {movies.map((movie) => (
         <CardPelis
           key={movie.id}
           movie={movie}
-          //gotoPeli={gotoPeli}
-          //esFavorita={esFavorita}
-          //addFavoritas={addFavoritas}
-          //eliminarFavoritas={eliminarFavoritas}
         />
       ))}
+
+      {/*<ButtonsPagination
+        pagina={pagina}
+        totalPaginas={totalPaginas}
+        paginacionFetchSig={paginacionFetchSig}
+        paginacionFetchAnt={paginacionFetchAnt}
+      />*/}
     </div>
   );
 };
-
-
-{/*<div
-  className="btn-group"
-  role="group"
-  aria-label="grupoBotonesPaginacion"
->
-  <button
-    type="button"
-    className="btn btn-primary"
-    onClick={paginacionFetchAnt}
-    disabled={pagina <= 1}
-  >
-    Anterior
-  </button>
-
-  <button
-    type="button"
-    className="btn btn-primary"
-    onClick={paginacionFetchSig}
-    disabled={pagina >= totalPaginas}
-  >
-    Siguiente
-  </button>
-</div>
-*/}
-
-{/*
-fetch('https://api.themoviedb.org/3/movie/now_playing?language=es-ES&page=1&region=ES', options)
-  .then(res => res.json())
-  .then(res => console.log(res))
-  .catch(err => console.error(err));
-
-*/}

@@ -1,34 +1,21 @@
 import "./NavBar.css"
-import { Form, Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { Link } from "react-router-dom";
+//import { useState } from "react";
 import MovieLogo from "../../../../assets/movie-tickets-svgrepo-com.svg"
 import { ButtonsSelectorLenguaje } from "../../../ui/Elementos/Buttons/ButtonsSelectorLenguaje.jsx"
 import { FormattedMessage,useIntl } from "react-intl";
+//import { useSearchFetchTMDB } from "../../../../apis/useSearchFetchTMDB.jsx";
+import { useBuscarContext } from "../../../../context/BuscarContext.jsx";
 
 export const NavBar = () => {
-  const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
-  const [buscarPeli, setBuscarPeli] = useState("");
-  const navigate = useNavigate();
+  //const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
+  //const [buscarPeli, setBuscarPeli] = useState("");
+
+  const { query, setQuery } = useBuscarContext();
+
   const { formatMessage } = useIntl();
 
-
-  const fetchPeliculaByTitulo = async (titulo) => {
-    const response = await fetch(
-      `https://api.themoviedb.org/3/search/movie?query=${titulo}&language=es-ES&page=1&api_key=${API_KEY}`
-    );
-    const data = await response.json();
-    return data;
-  };
-
-  const handleBuscarPeli = async (e) => {
-    e.preventDefault();
-
-    if (buscarPeli.trim() === "") return;
-
-    const movies = await fetchPeliculaByTitulo(buscarPeli);
-
-    navigate("/resultados", { state: { movies: movies.results } });
-  };
+  //const { handleBuscarPeli } = useSearchFetchTMDB(API_KEY, buscarPeli);
 
   return (
     <nav className="navbar navbar-expand-lg bg-light">
@@ -113,9 +100,11 @@ export const NavBar = () => {
             </li>
           </ul>
 
-          <ButtonsSelectorLenguaje />
+          <span className="me-3">
+            <ButtonsSelectorLenguaje />
+          </span>
 
-          <form className="d-flex" role="search" onSubmit={handleBuscarPeli}>
+          <form className="d-flex" role="search">
             <input
               className="form-control me-2"
               type="search"
@@ -124,15 +113,15 @@ export const NavBar = () => {
                 defaultMessage: "Buscar películas",
               })}
               aria-label="Search"
-              value={buscarPeli}
-              onChange={(e) => setBuscarPeli(e.target.value)}
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
             />
-            <button className="btn btn-outline-success" type="submit">
+            {/*<button className="btn btn-outline-success" type="submit">
               <FormattedMessage
                 id="message.nav-search-button"
                 defaultMessage="Buscar"
               />
-            </button>
+            </button>*/}
           </form>
         </div>
       </div>
