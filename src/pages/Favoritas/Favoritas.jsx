@@ -3,6 +3,7 @@ import "./Favoritas.css"
 import { useFavoritas } from "../../context/FavoritasContext"
 import { useNavigate } from "react-router-dom";
 import placeholderMovieCover from "../../assets/placeholderPoster.jpg"
+import { FormattedMessage } from "react-intl";
 
 export const Favoritas = () => {
     const { favoritas, eliminarFavoritas } = useFavoritas();
@@ -14,7 +15,13 @@ export const Favoritas = () => {
 
     return (
       <div id="favoritas">
-        <h1>favoritas({favoritas.length})</h1>
+        <h1>
+          <FormattedMessage
+            id="message.favorites-title"
+            defaultMessage="Favoritas ({contador})"
+            values={{ contador: favoritas.length }}
+          />
+        </h1>
         <div className="favoritas-lista">
           {favoritas.map((movie) => (
             <div
@@ -22,7 +29,11 @@ export const Favoritas = () => {
               className="favorita-item d-flex flex-column align-items-center"
             >
               <img
-                src={movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : placeholderMovieCover }
+                src={
+                  movie.poster_path
+                    ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+                    : placeholderMovieCover
+                }
                 alt={movie.title}
               />
 
@@ -36,14 +47,20 @@ export const Favoritas = () => {
                   className="btn btn-primary btn-sm"
                   onClick={() => gotoPeli(movie)}
                 >
-                  Detalles
+                  <FormattedMessage
+                    id="message.favorites-details"
+                    defaultMessage="Detalles"
+                  />
                 </button>
                 <button
                   type="button"
                   className="btn btn-primary btn-sm"
                   onClick={() => eliminarFavoritas(movie.id)}
                 >
-                  Eliminar
+                  <FormattedMessage
+                    id="message.favorites-remove"
+                    defaultMessage="Eliminar"
+                  />
                 </button>
               </div>
             </div>

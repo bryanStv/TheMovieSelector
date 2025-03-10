@@ -40,5 +40,13 @@
   "genre.thriller": "Thriller",
   "genre.war": "War",
   "genre.western": "Western",
-  "genre.empty": "There are no available genres"
+  "genre.empty": "There are no available genres",
+  "message.favorites-title": "Favorites ({contador})",
+  "message.favorites-details": "Details",
+  "message.favorites-remove": "Remove",
+  "message.formulario-contacto-title": "Contact Form",
+  "message.formulario-contacto-email": "Email",
+  "message.formulario-contacto-password": "Password",
+  "message.formulario-contacto-email-help": "We will never share your email with anyone.",
+  "message.formulario-contacto-conditions": "Accept terms of use"
 }

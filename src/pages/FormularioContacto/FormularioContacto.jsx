@@ -1,48 +1,73 @@
 import "./FormularioContacto.css";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
+import { FormattedMessage } from "react-intl";
 
 export const FormularioContacto = () => {
     const [email, setEmail] = useState("");
     const [contraseña, setContraseña] = useState("");
 
     const [datos,setDatos] = useState("");
+    const inputDato = useRef()
 
-    const mostrarInformacion = (e) => {
+    /*const mostrarInformacion = (e) => {
         e.preventDefault();
 
         setDatos(email + " " + contraseña);
-    }
+    }*/
+
+    useEffect(() => {
+      inputDato.current.focus();
+    },[]);
+
+    useEffect(() => {
+      setDatos(`${email} ${contraseña}`);
+    },[email, contraseña]);
 
     return (
       <>
-        <h1>Formulario de Contacto</h1>
-        <form onSubmit={mostrarInformacion}>
+        <h1>
+          <FormattedMessage
+            id="message.formulario-contacto-title"
+            defaultMessage="Formulario de Contacto"
+          />
+        </h1>
+        {/*</><form onSubmit={mostrarInformacion}>*/}
+        <form>
           <div className="mb-3">
             <label for="exampleInputEmail1" className="form-label">
-              Email
+              <FormattedMessage
+                id="message.formulario-contacto-email"
+                defaultMessage="Correo electrónico"
+              />
             </label>
             <input
               type="email"
               className="form-control"
               id="exampleInputEmail1"
               aria-describedby="emailHelp"
-              value = {email}
+              value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
             <div id="emailHelp" className="form-text">
-              Nunca compartiremos tu correo electrónico con nadie.
+              <FormattedMessage
+                id="message.formulario-contacto-email-help"
+                defaultMessage="Nunca compartiremos tu correo electrónico con nadie."
+              />
             </div>
           </div>
           <div className="mb-3">
             <label for="exampleInputPassword1" className="form-label">
-              Contraseña
+              <FormattedMessage
+                id="message.formulario-contacto-password"
+                defaultMessage="Contraseña"
+              />
             </label>
             <input
               type="password"
               className="form-control"
               id="exampleInputPassword1"
-              value = {contraseña}
+              value={contraseña}
               onChange={(e) => setContraseña(e.target.value)}
             />
           </div>
@@ -52,13 +77,20 @@ export const FormularioContacto = () => {
               className="form-check-input"
               id="exampleCheck1"
             />
-            <label className="form-check-label" for="exampleCheck1">
-              Aceptar condiciones
+            <label
+              className="form-check-label"
+              for="exampleCheck1"
+              ref={inputDato}
+            >
+              <FormattedMessage
+                id="message.formulario-contacto-conditions"
+                defaultMessage="Aceptar condiciones de uso"
+              />
             </label>
           </div>
-          <button type="submit" className="btn btn-primary">
+          {/*<button type="submit" className="btn btn-primary">
             Submit
-          </button>
+          </button>*/}
         </form>
 
         <div className="alert alert-primary" role="alert">

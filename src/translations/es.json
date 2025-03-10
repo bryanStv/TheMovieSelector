@@ -20,7 +20,7 @@
   "message.Pagination-prev": "Anterior",
   "message.Pagination-next": "Siguiente",
   "message.API-movies-lan": "es-ES",
-  "message.results-search-title" : "Resultados de búsqueda",
+  "message.results-search-title": "Resultados de búsqueda",
   "genre.action": "Acción",
   "genre.adventure": "Aventura",
   "genre.animation": "Animación",
@@ -40,5 +40,13 @@
   "genre.thriller": "Suspense",
   "genre.war": "Bélica",
   "genre.western": "Western",
-  "genre.empty": "No hay géneros disponibles"
+  "genre.empty": "No hay géneros disponibles",
+  "message.favorites-title": "Favoritas ({contador})",
+  "message.favorites-details": "Detalles",
+  "message.favorites-remove": "Eliminar",
+  "message.formulario-contacto-title": "Formulario de contacto",
+  "message.formulario-contacto-email": "Correo electrónico",
+  "message.formulario-contacto-password": "Contraseña",
+  "message.formulario-contacto-email-help": "Nunca compartiremos tu correo electrónico con nadie.",
+  "message.formulario-contacto-conditions": "Aceptar condiciones de uso"
 }

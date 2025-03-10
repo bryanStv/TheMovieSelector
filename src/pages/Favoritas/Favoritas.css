@@ -11,6 +11,10 @@
     flex-wrap: wrap;
 }
 
+#favoritas h1{
+    text-align: center;
+}
+
 #favoritas img{
     width: 10em;
     height: 15em;
