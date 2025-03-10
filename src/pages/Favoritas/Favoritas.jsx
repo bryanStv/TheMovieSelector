@@ -4,10 +4,13 @@ import { useFavoritas } from "../../context/FavoritasContext"
 import { useNavigate } from "react-router-dom";
 import placeholderMovieCover from "../../assets/placeholderPoster.jpg"
 import { FormattedMessage } from "react-intl";
+import { useContador } from "../../hooks/contador";
 
 export const Favoritas = () => {
-    const { favoritas, eliminarFavoritas } = useFavoritas();
+    const { favoritas, eliminarFavoritas } = useFavoritas()
     const navigate = useNavigate()
+    const contadorMeGusta = useContador()
+    const contadorPersonas = useContador()
 
     const gotoPeli = (movie) => {
       navigate("/pelicula", { state: { movie } });
@@ -65,6 +68,67 @@ export const Favoritas = () => {
               </div>
             </div>
           ))}
+        </div>
+        
+        <div
+          id="favoritos-contadores"
+          className="d-flex align-items-center gap-3 flex-wrap mt-3"
+        >
+          <div className="d-flex align-items-center gap-2">
+            <p className="mb-0">Me gusta: {contadorMeGusta.contador}</p>
+            <div className="btn-group btn-group-sm" role="group">
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={contadorMeGusta.incrementar}
+              >
+                +
+              </button>
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={contadorMeGusta.decrementar}
+              >
+                -
+              </button>
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={contadorMeGusta.reset}
+              >
+                Reset
+              </button>
+            </div>
+          </div>
+
+          <div className="d-flex align-items-center gap-2">
+            <p className="mb-0">
+              Personas a las que les gusta: {contadorPersonas.contador}
+            </p>
+            <div className="btn-group btn-group-sm" role="group">
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={contadorPersonas.incrementar}
+              >
+                +
+              </button>
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={contadorPersonas.decrementar}
+              >
+                -
+              </button>
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={contadorPersonas.reset}
+              >
+                Reset
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     );
