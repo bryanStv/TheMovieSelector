@@ -8,6 +8,21 @@ import { FormattedMessage,useIntl } from "react-intl";
 import { useBuscarContext } from "../../../../context/BuscarContext.jsx";
 
 export const NavBar = () => {
+
+  /*let user = JSON.parse(localStorage.getItem("usuario"));
+
+  if (user) {
+    user = JSON.parse(user);
+  } else {
+    user = {};
+  }
+
+  const {
+    id: userId = "",
+    nombre: userNombre = "",
+    email: userEmail = "",
+  } = user;*/
+
   //const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
   //const [buscarPeli, setBuscarPeli] = useState("");
 
@@ -122,6 +137,19 @@ export const NavBar = () => {
                 defaultMessage="Buscar"
               />
             </button>*/}
+            <span>
+              <Link to="/login" className="btn btn-success position-relative">
+                {/*{userNombre !== "" ? (
+                  userNombre
+                ) : (
+                  <>Perfil</>
+                )}*/}
+                Perfil
+                <span className="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle">
+                  <span className="visually-hidden">New alerts</span>
+                </span>
+              </Link>
+            </span>
           </form>
         </div>
       </div>

@@ -83,8 +83,8 @@ export const BuscarProvider = ({ children }) => {
     useEffect(() => {
         const timer = setTimeout(fetchPeliculaByTitulo, 100);
         setPagina(1);
-        console.log("pagina: " + pagina);
-        console.log("idioma: " + idioma);
+        //console.log("pagina: " + pagina);
+        //console.log("idioma: " + idioma);
         return () => clearTimeout(timer);
     },[query,idioma]);
 

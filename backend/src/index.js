@@ -4,6 +4,8 @@ const db = require("./db/connection.js")
 const dotenv = require("dotenv")
 const cors = require("cors")
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const cookieParser = require("cookie-parser");
 
 //Configuración inicial
 dotenv.config()
@@ -16,15 +18,30 @@ console.log("Escuchando en puerto "+app.get("port"))
 
 //Middlewares
 app.use(morgan("dev"))
-app.use(express.json()); //Parsear json
-app.use(cors({
+app.use(express.json()) //Parsear json
+app.use(
+  cors({
+    //origin: "http://localhost:5173",
     origin: "*",
     methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"]
-}))
+    credentials: true,
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
+app.use(cookieParser())
+
+//APIS IMPORTS
+const loginRoute = require("./db/queries/login.js")
+const registerRoute = require("./db/queries/register.js")
+const usersRoute = require("./db/queries/users.js")
+
+//APIS ROUTES
+app.use("/api", loginRoute);
+app.use("/api", registerRoute);
+app.use("/api",usersRoute);
 
 //Rutas
-app.get("/users", async (req, res) => {
+/*app.get("/users", async (req, res) => {
     const conn = await db.getConnection()
     const resultado = await conn.query("SELECT * FROM usuarios")
 
@@ -33,9 +50,9 @@ app.get("/users", async (req, res) => {
     }
 
     res.json(resultado)
-})
+})*/
 
-app.post("/user", async(req,res) => {
+/*app.post("/user", async(req,res) => {
     try {
         const { usuario, contraseña, email } = req.body;
 
@@ -69,14 +86,15 @@ app.post("/user", async(req,res) => {
         res.status(201).json({
         message: "Usuario creado con éxito",
         userId: result.insertId,
+        usuario: usuario,
         });
     } catch (error) {
       console.error("Error al crear usuario:", error);
       res.status(500).json({ message: "Error interno del servidor" });
     }
-})
+})*/
 
-app.post("/login", async (req, res) => {
+/*app.post("/login", async (req, res) => {
   try {
     const { usuario, contraseña } = req.body;
 
@@ -111,15 +129,76 @@ app.post("/login", async (req, res) => {
     const usuarioData = {
       id: usuarioBD[0].id,
       nombre: usuarioBD[0].usuario,
-      email: usuarioBD[0].email
+      email: usuarioBD[0].email,
     };
 
-    return res.status(200).json(usuarioData);
+    const token = jwt.sign(usuarioData, process.env.JWT_SECRET, {
+      expiresIn: "1h",
+    });
+
+
+    // Guardar el token en una cookie segura
+    /*res.cookie("token", token, {
+      httpOnly: false,
+      secure: false,
+      sameSite: "Lax",
+      maxAge: 3600000, // 1 hora en milisegundos
+    });*/
+
+    //console.log("JWT_SECRET:", process.env.JWT_SECRET);
+    /*console.log("Token: "+token)
+
+    return res.status(200).json(
+      token
+    );
   } catch (error) {
     console.error("Error al hacer login:", error);
     res.status(500).json({ message: "Error interno del servidor" });
   }
+});*/
+
+/*app.post("/logout", (req, res) => {
+  res.clearCookie("token");
+  res.json({ message: "Logout exitoso" });
 });
+
+app.get("/session", async (req, res) => {
+  try {
+    const token = req.cookies.token;
+
+    if (!token) {
+      return res.status(401).json({ message: "No autorizado" });
+    }
+
+    const usuarioData = jwt.verify(token, process.env.JWT_SECRET);
+    res.json(usuarioData);
+  } catch (error) {
+    return res.status(401).json({ message: "Token inválido o expirado" });
+  }
+});*/
+
+
+/*app.post("/recover-password", async (req, res) => {
+  try {
+    const { usuario } = req.body;
+
+    if(!usuario){
+      return res.status(400).json({message: "El campo usuario es obligatorio"});
+    }
+
+    const conn = db.getConnection()
+
+    const [usuarioBD] = await conn.query(
+      "SELECT * FROM usuarios WHERE usuario = ?",
+      [usuario]
+    );
+
+    if(usuarioBD.length === 0){
+      return res.status(400)
+    }
+
+
+})*/
 
 
 // Ruta principal
