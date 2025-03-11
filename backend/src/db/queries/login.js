@@ -36,10 +36,13 @@ router.post("/login", async (req, res) => {
         .json({ message: "Usuario o contraseña incorrectos" });
     }
 
+    res.clearCookie("token");
+
     const usuarioData = {
       id: usuarioBD[0].id,
       nombre: usuarioBD[0].usuario,
       email: usuarioBD[0].email,
+      iat: Math.floor(Date.now() / 1000),
     };
 
     const token = jwt.sign(usuarioData, process.env.JWT_SECRET, {
