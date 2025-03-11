@@ -6,31 +6,18 @@ import { ButtonsSelectorLenguaje } from "../../../ui/Elementos/Buttons/ButtonsSe
 import { FormattedMessage,useIntl } from "react-intl";
 //import { useSearchFetchTMDB } from "../../../../apis/useSearchFetchTMDB.jsx";
 import { useBuscarContext } from "../../../../context/BuscarContext.jsx";
+import { useAuth } from "../../../../context/AuthContext.jsx";
 
 export const NavBar = () => {
 
-  /*let user = JSON.parse(localStorage.getItem("usuario"));
-
-  if (user) {
-    user = JSON.parse(user);
-  } else {
-    user = {};
-  }
-
-  const {
-    id: userId = "",
-    nombre: userNombre = "",
-    email: userEmail = "",
-  } = user;*/
-
-  //const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
-  //const [buscarPeli, setBuscarPeli] = useState("");
-
   const { query, setQuery } = useBuscarContext();
-
   const { formatMessage } = useIntl();
+  const { user } = useAuth();
+  let enlace = "/login"
 
-  //const { handleBuscarPeli } = useSearchFetchTMDB(API_KEY, buscarPeli);
+  if(user){
+    enlace = "/perfil"
+  }
 
   return (
     <nav className="navbar navbar-expand-lg bg-light">
@@ -138,13 +125,8 @@ export const NavBar = () => {
               />
             </button>*/}
             <span>
-              <Link to="/login" className="btn btn-success position-relative">
-                {/*{userNombre !== "" ? (
-                  userNombre
-                ) : (
-                  <>Perfil</>
-                )}*/}
-                Perfil
+              <Link to={enlace} className="btn btn-success position-relative">
+                {user ? user.usuario : "Perfil" }
                 <span className="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle">
                   <span className="visually-hidden">New alerts</span>
                 </span>

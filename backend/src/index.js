@@ -21,8 +21,8 @@ app.use(morgan("dev"))
 app.use(express.json()) //Parsear json
 app.use(
   cors({
-    //origin: "http://localhost:5173",
-    origin: "*",
+    origin: "http://localhost:5173",
+    //origin: "*",
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
     allowedHeaders: ["Content-Type", "Authorization"],
@@ -34,11 +34,13 @@ app.use(cookieParser())
 const loginRoute = require("./db/queries/login.js")
 const registerRoute = require("./db/queries/register.js")
 const usersRoute = require("./db/queries/users.js")
+const getUserByToken = require("./db/auth/getUserByToken.js")
 
 //APIS ROUTES
 app.use("/api", loginRoute);
 app.use("/api", registerRoute);
-app.use("/api",usersRoute);
+app.use("/api", usersRoute);
+app.use("/api", getUserByToken);
 
 //Rutas
 /*app.get("/users", async (req, res) => {

@@ -15,6 +15,7 @@ import { Cartelera } from "../pages/Cartelera/Cartelera.jsx";
 import { PaginaError } from "../pages/PaginaError/PaginaError.jsx";
 import { Login } from "../pages/Usuarios/Login/Login.jsx";
 import { Register } from "../pages/Usuarios/Register/Register.jsx";
+import { Perfil } from "../pages/Usuarios/Perfil/Perfil.jsx";
 
 export const Routes = () => {
     const router = createBrowserRouter(
@@ -28,6 +29,7 @@ export const Routes = () => {
             <Route path="/cartelera" element={<Cartelera />}/>
             <Route path="/login" element={<Login />}/>
             <Route path="/register" element={<Register />}/>
+            <Route path="/perfil" element={<Perfil />}/>
             <Route path="*" element={<PaginaError />} />
         </Route>
       )

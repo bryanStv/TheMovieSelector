@@ -1,11 +1,14 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Login.css"
 import { useState } from "react";
+import { useAuth } from "../../../context/AuthContext";
 
 export const Login = () => {
     const [usuario, setUsuario] = useState("");
     const [contraseña, setContraseña] = useState("");
     const [mensaje, setMensaje] = useState("");
+    const { userRefresh } = useAuth();
+    const navigate = useNavigate();
 
     /*useEffect(() => {
       const checkSession = async () => {
@@ -44,10 +47,13 @@ export const Login = () => {
             const data = await response.json();
 
             if (response.ok) {
-                setMensaje(`Bienvenido, ${data.nombre}`)
-                console.log(data)
-                //localStorage.setItem("usuario: ",JSON.stringify(data))
+                //userRefresh(data.token,data.usuario)
                 localStorage.setItem("token", data.token)
+                //setMensaje(`Bienvenido, ${user?.usuario}`)
+                //console.log(data)
+                await userRefresh()
+                navigate("/perfil")
+                //localStorage.setItem("usuario: ",JSON.stringify(data))
             } else {
                 setMensaje(data.message);
             }

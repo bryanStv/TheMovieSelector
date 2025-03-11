@@ -25,7 +25,7 @@ export const AuthContextProvider = ({ children }) => {
   const loadUserInfo = async (token, setUser) => {
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_BACKEND}API/v1/users/private-info`,
+        "http://localhost:3000/api/getUserByToken",
         {
           headers: {
             Authorization: token,
