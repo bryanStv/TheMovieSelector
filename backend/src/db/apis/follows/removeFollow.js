@@ -23,7 +23,6 @@ router.post("/remove-follow", async (req, res) => {
       return res.status(400).json({ message: "No sigues a este usuario" });
     }
 
-    // Eliminamos el seguimiento de la base de datos
     await conn.execute(
       "DELETE FROM seguidores WHERE usuario_id = ? AND seguido_id = ?",
       [usuario_id, seguido_id]

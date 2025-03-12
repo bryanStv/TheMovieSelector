@@ -11,12 +11,16 @@ const port = process.env.PORT || 3000
 app.set("port", port)
 app.listen(app.get("port"))
 
+/*res.setHeader("Access-Control-Allow-Origin", "*");
+res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");*/
+
 console.log("Escuchando en puerto "+app.get("port"))
 
 //Middlewares
 app.use(morgan("dev"))
 app.use(express.json()) //Parsear json
-app.use(
+/*app.use(
   cors({
     origin: "http://localhost:5173",
     //origin: "*",
@@ -24,7 +28,8 @@ app.use(
     credentials: true,
     allowedHeaders: ["Content-Type", "Authorization"],
   })
-);
+);*/
+app.use(cors());
 app.use(cookieParser())
 
 //APIS IMPORTS

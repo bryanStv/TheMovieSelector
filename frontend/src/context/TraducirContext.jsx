@@ -6,8 +6,9 @@ import messagesEn from "../translations/en.json";
 const TraducirContext = createContext();
 
 export const TraducirProvider = ({ children }) => {
+  localStorage.setItem("language", "es-ES")
   const [locale, setLocale] = useState(
-    localStorage.getItem("language") || "es"
+    localStorage.getItem("language") || "es-ES"
   );
 
   useEffect(() => {
