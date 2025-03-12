@@ -6,6 +6,7 @@ import { useFetchListUsers } from "../../../apis/useFetchListUsers";
 import { useFetchAddFollow } from "../../../apis/follows/useFetchAddFollow";
 import { useFetchIsFollowed } from "../../../apis/follows/useFetchIsFollowed";
 import { useFetchRemoveFollow } from "../../../apis/follows/useFetchRemoveFollow";
+import { useFetchChangePassword } from "../../../apis/users/useFetchChangePassword";
 
 export const Perfil = () => {
     const { user, logout } = useAuth();
@@ -101,13 +102,6 @@ export const Perfil = () => {
                 >
                   {followedUsers[otheruser.id] ? "Dejar de seguir" : "Seguir"}
                 </button>
-
-                {/*<button
-                    className="btn-seguir"
-                    onClick={() => handleFollow(user.id, otheruser.id)}
-                    >
-                    Seguir
-                    </button>*/}
               </li>
             ))}
           </ul>
