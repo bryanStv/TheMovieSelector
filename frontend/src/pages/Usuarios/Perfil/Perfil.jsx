@@ -1,5 +1,6 @@
 import "./Perfil.css"
 import { useAuth } from "../../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 import { useEffect,useState } from "react";
 import { useFetchListUsers } from "../../../apis/useFetchListUsers";
 import { useFetchAddFollow } from "../../../apis/follows/useFetchAddFollow";
@@ -13,6 +14,12 @@ export const Perfil = () => {
     const { removeFollow } = useFetchRemoveFollow();
     const { checkIfFollowed } = useFetchIsFollowed();
     const [followedUsers, setFollowedUsers] = useState({});
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        logout();
+        navigate("/");
+    }
 
     const checkIfUserIsFollowed = (idUser, idSeguido) => {
         if (!followedUsers[idSeguido]) {
@@ -66,7 +73,7 @@ export const Perfil = () => {
             {/*<button className="btn-cambiarContraseña" onClick={changePassword}>
                 Cerrar sesión
                 </button>*/}
-            <button className="btn-logout" onClick={logout}>
+            <button className="btn-logout" onClick={handleLogout}>
               Cerrar sesión
             </button>
           </div>
