@@ -5,6 +5,7 @@ const db = require("../connection");
 const router = express.Router();
 
 router.get("/getUserByToken", async (req, res) => {
+  res.setHeader("Cache-Control", "no-store");
   const token = req.headers.authorization;
 
   if (!token) {

@@ -1,10 +1,7 @@
 const express = require("express")
 const morgan = require("morgan")
-const db = require("./db/connection.js")
 const dotenv = require("dotenv")
 const cors = require("cors")
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 
 //Configuración inicial
@@ -31,9 +28,9 @@ app.use(
 app.use(cookieParser())
 
 //APIS IMPORTS
-const loginRoute = require("./db/queries/login.js")
-const registerRoute = require("./db/queries/register.js")
-const usersRoute = require("./db/queries/users.js")
+const loginRoute = require("./db/apis/login.js")
+const registerRoute = require("./db/apis/register.js")
+const usersRoute = require("./db/apis/users.js")
 const getUserByToken = require("./db/auth/getUserByToken.js")
 
 //APIS ROUTES

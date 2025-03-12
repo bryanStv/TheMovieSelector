@@ -1,98 +1,72 @@
-import { createContext, useContext, useMemo, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 
 export const AuthContext = createContext(null);
 
 export const AuthContextProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [user, setUser] = useState(null);
-  //const [userFriends, setUserFriends] = useState(null);
 
-  // User token
   const login = (token) => {
     setToken(token);
   };
 
   const logout = () => {
-    setToken("");
+    setToken(null);
     setUser(null);
+    localStorage.removeItem("token");
   };
 
-  useMemo(() => {
-    localStorage.setItem("token", token);
+  useEffect(() => {
+    if (token) {
+      localStorage.setItem("token", token);
+      loadUserInfo(token);
+    } else {
+      setUser(null);
+    }
   }, [token]);
 
-  // User Info
-  const loadUserInfo = async (token, setUser) => {
+  const loadUserInfo = async (authToken) => {
+    if (!authToken) return;
+
     try {
-      const response = await fetch(
-        "http://localhost:3000/api/getUserByToken",
-        {
-          headers: {
-            Authorization: token,
-          },
-        }
-      );
+      const response = await fetch("http://localhost:3000/api/getUserByToken", {
+        headers: { Authorization: token },
+        cache: "no-store",
+      });
 
-      const json = await response.json();
+      const data = await response.json();
 
-      if (!response.ok) {
-        throw new Error(json.message);
+      if (response.ok) {
+        setUser(data.data);
+      } else {
+        throw new Error(data.message);
       }
 
-      const data = json.data;
-
-      setUser(data);
     } catch (error) {
-        console.error(error);
-        setUser(null);
+      console.error("Error al obtener usuario:", error);
+      setUser(null);
+      setToken(null);
+      localStorage.removeItem("token");
     }
   };
 
-  useMemo(() => {
-    token != "" && loadUserInfo(token, setUser);
-  }, [token]);
-
-  const userRefresh = () => loadUserInfo(token, setUser);
-
-  // User friends
-  /*const loadUserFriends = async (token, setUserFriends) => {
-    try {
-      const response = await fetch(
-        `${import.meta.env.VITE_BACKEND}API/v1/friends`,
-        {
-          headers: {
-            Authorization: token,
-          },
-        }
-      );
-
-      const json = await response.json();
-
-      if (!response.ok) {
-        throw new Error(json.message);
-      }
-
-      const data = json.data;
-
-      setUserFriends(data);
-    } catch (error) {
-        console.error(error);
-        setUserFriends(null);
+  /*useEffect(() => {
+    if (token != "null") {
+      if (token) loadUserInfo(token);
     }
-  };
-
-  useMemo(() => {
-    token != "" && loadUserFriends(token, setUserFriends);
   }, [token]);
 
-  const userFriendsRefresh = () => loadUserFriends(token, setUserFriends);*/
+  const userRefresh = async () => {
+    await loadUserInfo(token, setUser);
+    console.log(user);
+  };*/
 
   return (
     <AuthContext.Provider
       value={{
         token,
         user,
-        userRefresh,
+        //userRefresh,
         login,
         logout,
       }}
