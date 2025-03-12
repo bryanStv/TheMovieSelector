@@ -1,5 +1,5 @@
-const { login } = require("./login");
-const { register } = require("./register");
+const { login } = require("./user/login");
+const { register } = require("./user/register");
 
 
 module.exports = {

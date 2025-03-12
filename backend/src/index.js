@@ -28,16 +28,22 @@ app.use(
 app.use(cookieParser())
 
 //APIS IMPORTS
-const loginRoute = require("./db/apis/login.js")
-const registerRoute = require("./db/apis/register.js")
-const usersRoute = require("./db/apis/users.js")
+const loginRoute = require("./db/apis/user/login.js")
+const registerRoute = require("./db/apis/user/register.js")
+const usersRoute = require("./db/apis/user/users.js")
 const getUserByToken = require("./db/auth/getUserByToken.js")
+const addFollowRoute = require("./db/apis/follows/addFollow.js")
+const removeFollowRoute = require("./db/apis/follows/removeFollow.js")
+const isFollowedRoute = require("./db/apis/follows/isFollowed.js")
 
 //APIS ROUTES
-app.use("/api", loginRoute);
-app.use("/api", registerRoute);
-app.use("/api", usersRoute);
-app.use("/api", getUserByToken);
+app.use("/api", loginRoute)
+app.use("/api", registerRoute)
+app.use("/api", usersRoute)
+app.use("/api", getUserByToken)
+app.use("/api", addFollowRoute)
+app.use("/api", isFollowedRoute)
+app.use("/api", removeFollowRoute)
 
 //Rutas
 /*app.get("/users", async (req, res) => {
