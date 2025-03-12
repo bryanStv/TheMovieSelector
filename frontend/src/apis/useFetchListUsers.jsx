@@ -13,7 +13,7 @@ export const useFetchListUsers = () => {
           throw new Error("Error al obtener usuarios");
         }
         const data = await response.json();
-        setUsers(data);
+        setUsers(data[0]);
       } catch (error) {
         setError(error.message);
       } finally {
