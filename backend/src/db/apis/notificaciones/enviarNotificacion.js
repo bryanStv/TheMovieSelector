@@ -6,7 +6,7 @@ const {getAuthorization} = require("../../auth/getAuthoritation.js");
 
 const router = express.Router();
 
-router.post("/send-notification", async (req, res) => {
+router.post("/send-message", async (req, res) => {
     try {
         const token = req.header("Authorization");
         const { receptor_id, mensaje } = req.body;

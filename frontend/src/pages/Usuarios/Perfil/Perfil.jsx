@@ -7,20 +7,29 @@ import { useFetchAddFollow } from "../../../apis/follows/useFetchAddFollow";
 import { useFetchIsFollowed } from "../../../apis/follows/useFetchIsFollowed";
 import { useFetchRemoveFollow } from "../../../apis/follows/useFetchRemoveFollow";
 import { useFetchChangePassword } from "../../../apis/users/useFetchChangePassword";
+import { useFetchEnviarMensaje } from "../../../apis/notificaciones/useFetchEnviarMensaje";
 
 export const Perfil = () => {
-  const { user, logout } = useAuth();
+  const { user, logout, token } = useAuth();
   const { users } = useFetchListUsers();
   const { addFollow } = useFetchAddFollow();
   const { removeFollow } = useFetchRemoveFollow();
   const { checkIfFollowed } = useFetchIsFollowed();
   const { changePassword } = useFetchChangePassword();
+  const { enviarMensaje } = useFetchEnviarMensaje();
   const [followedUsers, setFollowedUsers] = useState({});
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
+  const [showEnviarMensajeModal,setshowEnviarMensajeModal] = useState(false);
   const [newPassword, setNewPassword] = useState("");
   const [newPasswordVerify,setNewPasswordVerify] = useState("");
   const [viejaPassword, setViejaPassword] = useState("");
+  const [selectedUser, setSelectedUser] = useState("");
+  const [mensaje, setMensaje] = useState("");
+
+  const handleChangeUser = (event) => {
+    setSelectedUser(event.target.value);
+  };
 
   if (user === null) {
     navigate("/");
@@ -30,6 +39,15 @@ export const Perfil = () => {
     logout();
     navigate("/");
   };
+
+  const handleEnviarMensaje = (otherIdUser, mensaje) => {
+    console.log(otherIdUser+" --> "+mensaje+" Token: "+token)
+    if( !otherIdUser || !mensaje){
+      alert("Debes seleccionar un usuario y escribir un mensaje");
+    }
+
+    enviarMensaje(otherIdUser,mensaje,token);
+  }
 
     const handlePasswordChange = (newPassword, viejaPassword) => {
         if (newPassword !== newPasswordVerify) {
@@ -120,8 +138,9 @@ export const Perfil = () => {
           style={{ display: "flex", flexDirection: "column" }}
         >
           <button
-            className="btn btn-success btn-sm mt-3" 
-            onClick={() => setShowModal(true)}> 
+            className="btn btn-success btn-sm mt-3"
+            onClick={() => setshowEnviarMensajeModal(true)}
+          >
             Enviar mensaje
           </button>
           <button
@@ -216,7 +235,7 @@ export const Perfil = () => {
       </div>
       <div
         className="perfil-otros-usuario col-10"
-        style={{ maxHeight: "300px", overflowY: "auto" }}
+        style={{ maxHeight: "600px", overflowY: "auto" }}
       >
         <div>
           <table
@@ -273,6 +292,76 @@ export const Perfil = () => {
           </table>
         </div>
       </div>
+
+      {/* Modal enviar mensajes */}
+      {showEnviarMensajeModal && (
+        <div
+          className="modal fade show"
+          style={{ display: "block" }}
+          tabIndex="-1"
+          role="dialog"
+          aria-labelledby="ModalEnviarMensajes"
+          aria-hidden="true"
+        >
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="ModalEnviarMensajes">
+                  Enviar mensaje
+                </h5>
+              </div>
+              <div className="modal-body">
+                <div className="form-group">
+                  <label htmlFor="usuario">Seleccionar Usuario</label>
+                  <select
+                    id="usuario"
+                    className="form-control"
+                    value={selectedUser}
+                    onChange={handleChangeUser}
+                  >
+                    <option value="">Selecciona un usuario</option>
+                    {users.map((otheruser, index) => (
+                      <option key={index} value={otheruser.id}>
+                        {otheruser.usuario} (ID: {otheruser.id})
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="form-group">
+                  <label htmlFor="mensaje">Mensaje</label>
+                  <textarea
+                    className="form-control"
+                    id="mensaje"
+                    value={mensaje}
+                    onChange={(e) => setMensaje(e.target.value)}
+                    placeholder="Escribe tu mensaje"
+                    rows={4}
+                    style={{resize: "none"}}
+                  />
+                </div>
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={() => setshowEnviarMensajeModal(false)}
+                >
+                  Cancelar
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={() =>
+                    handleEnviarMensaje(selectedUser,mensaje)
+                  }
+                >
+                  Guardar cambios
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
