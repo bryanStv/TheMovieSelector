@@ -8,6 +8,7 @@ import { useFetchIsFollowed } from "../../../apis/follows/useFetchIsFollowed";
 import { useFetchRemoveFollow } from "../../../apis/follows/useFetchRemoveFollow";
 import { useFetchChangePassword } from "../../../apis/users/useFetchChangePassword";
 import { useFetchEnviarMensaje } from "../../../apis/notificaciones/useFetchEnviarMensaje";
+import { useFetchRecibirMensajes } from "../../../apis/notificaciones/useFetchRecibirMensajes";
 
 export const Perfil = () => {
   const { user, logout, token } = useAuth();
@@ -17,6 +18,7 @@ export const Perfil = () => {
   const { checkIfFollowed } = useFetchIsFollowed();
   const { changePassword } = useFetchChangePassword();
   const { enviarMensaje } = useFetchEnviarMensaje();
+  const { recibirMensajes, notificaciones } = useFetchRecibirMensajes();
   const [followedUsers, setFollowedUsers] = useState({});
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
@@ -39,6 +41,14 @@ export const Perfil = () => {
     logout();
     navigate("/");
   };
+
+  const handleRecibirMensajes = () => {
+    recibirMensajes();
+
+    for (const notificacion of notificaciones) {
+      console.log(notificacion.mensaje)
+    }
+  }
 
   const handleEnviarMensaje = (otherIdUser, mensaje) => {
     console.log(otherIdUser+" --> "+mensaje+" Token: "+token)
@@ -114,20 +124,20 @@ export const Perfil = () => {
       <h1 className="text-center">Perfil de {user.usuario}</h1>
       <div className="perfil col-2">
         <div className="perfil-info">
-          <div className="perfil-info-left">
+          <div className="perfil-info-left d-flex justify-content-center align-items-center">
             <img
               src="https://picsum.photos/200"
               alt="Foto de perfil"
               className="perfil-foto img-fluid rounded-circle"
               style={{ width: "100px", height: "100px", objectFit: "cover" }}
             />
+          </div>
+          <div className="perfil-info-right">
             <p>
               <strong>Usuario</strong>
               <br />
               {user.usuario}
             </p>
-          </div>
-          <div className="perfil-info-right">
             <p>
               <strong>Correo</strong>
               <br />
@@ -140,7 +150,13 @@ export const Perfil = () => {
           style={{ display: "flex", flexDirection: "column" }}
         >
           <button
-            className="btn btn-success btn-sm mt-3"
+            className="btn btn-primary btn-sm mt-3"
+            onClick={() => handleRecibirMensajes()}
+          >
+            Mensajes
+          </button>
+          <button
+            className="btn btn-success btn-sm"
             onClick={() => setshowEnviarMensajeModal(true)}
           >
             Enviar mensaje
@@ -338,7 +354,7 @@ export const Perfil = () => {
                     onChange={(e) => setMensaje(e.target.value)}
                     placeholder="Escribe tu mensaje"
                     rows={4}
-                    style={{resize: "none"}}
+                    style={{ resize: "none" }}
                   />
                 </div>
               </div>
@@ -353,9 +369,7 @@ export const Perfil = () => {
                 <button
                   type="button"
                   className="btn btn-primary"
-                  onClick={() =>
-                    handleEnviarMensaje(selectedUser,mensaje)
-                  }
+                  onClick={() => handleEnviarMensaje(selectedUser, mensaje)}
                 >
                   Guardar cambios
                 </button>
