@@ -55,8 +55,9 @@ export const useFetchRecibirMensajes = () => {
 }
 
 class Notificacion {
-  constructor(emisor_id, mensaje, fecha, estado) {
+  constructor(emisor_id,nombre_emisor, mensaje, fecha, estado) {
     this.emisor_id = emisor_id;
+    this.nombre_emisor = nombre_emisor;
     this.mensaje = mensaje;
     this.fecha = fecha;
     this.estado = estado;
@@ -74,6 +75,7 @@ const procesarNotificaciones = (jsonData) => {
     (item) =>
         new Notificacion(
         item.emisor_id,
+        item.nombre_emisor,
         item.mensaje,
         item.fecha,
         item.estado

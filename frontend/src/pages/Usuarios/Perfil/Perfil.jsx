@@ -23,6 +23,7 @@ export const Perfil = () => {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
   const [showEnviarMensajeModal,setshowEnviarMensajeModal] = useState(false);
+  const [showRecibidosModal,setShowRecibidosModal] = useState(false);
   const [newPassword, setNewPassword] = useState("");
   const [newPasswordVerify,setNewPasswordVerify] = useState("");
   const [viejaPassword, setViejaPassword] = useState("");
@@ -44,6 +45,8 @@ export const Perfil = () => {
 
   const handleRecibirMensajes = () => {
     recibirMensajes();
+
+    setShowRecibidosModal(true);
 
     for (const notificacion of notificaciones) {
       console.log(notificacion.mensaje)
@@ -372,6 +375,53 @@ export const Perfil = () => {
                   onClick={() => handleEnviarMensaje(selectedUser, mensaje)}
                 >
                   Guardar cambios
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal mensajes recibidos */}
+      {showRecibidosModal && (
+        <div
+          className="modal fade show"
+          style={{ display: "block" }}
+          tabIndex="-1"
+          role="dialog"
+          aria-labelledby="ModalEnviarMensajes"
+          aria-hidden="true"
+        >
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="ModalEnviarMensajes">
+                  Mensajes Recibidos
+                </h5>
+              </div>
+              <div className="modal-body">
+                <div className="mensajes-usuarios">
+                  {notificaciones.map((notificacion, index) => (
+                    <div key={index} className="mensaje">
+                      <h6>
+                        <strong>
+                          {notificacion.nombre_emisor}({notificacion.emisor_id}
+                          ):
+                        </strong>
+                        {notificacion.fecha}({notificacion.estado})
+                      </h6>
+                      <p>{notificacion.mensaje}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={() => setShowRecibidosModal(false)}
+                >
+                  Cerrar
                 </button>
               </div>
             </div>

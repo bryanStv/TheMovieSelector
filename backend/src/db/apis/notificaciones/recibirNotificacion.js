@@ -14,11 +14,19 @@ router.get("/receive-messages", async (req, res) => {
       return res.status(401).json({ message: "Unauthorized" });
     }
 
-    const query = `
+    /*const query = `
       SELECT emisor_id, mensaje, fecha, estado 
       FROM notificaciones 
       WHERE receptor_id = ?
       ORDER BY fecha DESC
+    `;*/
+
+    const query = `
+        SELECT n.emisor_id, u.usuario AS nombre_emisor, n.mensaje, n.fecha, n.estado
+        FROM notificaciones n
+        JOIN usuarios u ON n.emisor_id = u.id
+        WHERE n.receptor_id = ?
+        ORDER BY n.fecha DESC
     `;
 
     const [result] = await conn.execute(query, [id]);
