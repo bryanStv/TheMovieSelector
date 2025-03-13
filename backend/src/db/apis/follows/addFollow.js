@@ -4,7 +4,7 @@ const db = require("../../connection");
 const router = express.Router();
 
 router.post("/add-follow", async (req, res) => {
-    const conn = await db.getConnection();
+    let conn = await db.getConnection();
 
     const { usuario_id, seguido_id } = req.body;
 

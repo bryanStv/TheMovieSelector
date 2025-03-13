@@ -7,6 +7,7 @@ const authToken = require("../../auth/getUserByToken.js");
 const router = express.Router();
 
 router.patch("/change-password", async (req, res) => {
+  let conn;
   try {
     const { usuario, oldPassword, newPassword } = req.body;
     const token = JSON.stringify(req.body.token);
@@ -20,7 +21,7 @@ router.patch("/change-password", async (req, res) => {
         .json({ message: "Todos los campos son obligatorios" });
     }
 
-    const conn = await db.getConnection();
+    conn = await db.getConnection();
 
     const [rows] = await conn.query(
       "SELECT * FROM usuarios WHERE usuario = ?",
@@ -57,6 +58,8 @@ router.patch("/change-password", async (req, res) => {
   } catch (error) {
     console.error("Error al cambiar contraseña:", error);
     res.status(500).json({ message: "Error interno del servidor" });
+  }finally{
+    await conn.release();
   }
 });
 

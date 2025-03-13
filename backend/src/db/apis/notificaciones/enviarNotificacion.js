@@ -5,10 +5,11 @@ const {getAuthorization} = require("../../auth/getAuthoritation.js");
 const router = express.Router();
 
 router.post("/send-message", async (req, res) => {
+    let conn;
     try {
         const token = req.header("Authorization");
         const { receptor_id, mensaje } = req.body;
-        const conn = await db.getConnection();
+        conn = await db.getConnection();
         
         console.log("Token recibido en /send-notification:", token);
 
@@ -29,6 +30,8 @@ router.post("/send-message", async (req, res) => {
       } catch (error) {
         console.error("Error al crear usuario:", error);
         res.status(500).json({ message: "Error interno del servidor" });
+      }finally{
+        conn.release();
       }
 });
 

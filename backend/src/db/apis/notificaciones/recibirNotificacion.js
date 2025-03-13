@@ -5,7 +5,7 @@ const {getAuthorization} = require("../../auth/getAuthoritation.js");
 const router = express.Router();
 
 router.get("/receive-messages", async (req, res) => {
-  const conn = await db.getConnection();
+  let conn = await db.getConnection();
   const token = req.headers.authorization;
   const { id } = await getAuthorization(token);
 

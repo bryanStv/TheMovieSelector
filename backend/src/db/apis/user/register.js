@@ -5,6 +5,7 @@ const db = require("../../connection");
 const router = express.Router();
 
 router.post("/register", async (req, res) => {
+  let conn;
   try {
     const { usuario, contraseña, email } = req.body;
 
@@ -16,7 +17,7 @@ router.post("/register", async (req, res) => {
         .json({ message: "Todos los campos son obligatorios" });
     }
 
-    const conn = await db.getConnection();
+    conn = await db.getConnection();
     const [usuarioYaEnBD] = await conn.query(
       "SELECT * FROM usuarios WHERE usuario = ? OR email = ?",
       [usuario, email]
@@ -43,6 +44,8 @@ router.post("/register", async (req, res) => {
   } catch (error) {
     console.error("Error al crear usuario:", error);
     res.status(500).json({ message: "Error interno del servidor" });
+  } finally{
+    if (conn) conn.release();
   }
 });
 
