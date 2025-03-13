@@ -10,23 +10,28 @@ router.get("/receive-messages", async (req, res) => {
   const { id } = await getAuthorization(token);
 
   try {
-    
-    if(!id){
-        return res.status(401).json({ message: "Unauthorized" });
+    if (!id) {
+      return res.status(401).json({ message: "Unauthorized" });
     }
 
-    const query =
-      "SELECT FROM notificaciones (emisor_id,mensaje,fecha, estado) WHERE ()";
-    const values = [id, receptor_id, mensaje];
+    const query = `
+      SELECT emisor_id, mensaje, fecha, estado 
+      FROM notificaciones 
+      WHERE receptor_id = ?
+      ORDER BY fecha DESC
+    `;
 
-    const [result] = await conn.execute(query, values);
+    const [result] = await conn.execute(query, [id]);
 
     res.status(200).json({
-      message: "Mensaje enviado con exito",
+      message: "Notificaciones recibidas con éxito",
+      notificaciones: result,
     });
   } catch (error) {
-    console.error("Error al crear usuario:", error);
+    console.error("Error al obtener notificaciones:", error);
     res.status(500).json({ message: "Error interno del servidor" });
+  } finally {
+    conn.release();
   }
 });
 
