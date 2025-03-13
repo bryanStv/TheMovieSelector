@@ -152,14 +152,23 @@ export const Perfil = () => {
           className="botones-usuario"
           style={{ display: "flex", flexDirection: "column" }}
         >
-          <button
+          <button 
+            className="btn btn-primary btn-sm position-relative"
+            onClick={() => handleRecibirMensajes()}
+          >
+            Mensajes
+            <span className="position-absolute top-0 start-100 translate-middle p-2 bg-success border border-light rounded-circle">
+              <span className="visually-hidden">New alerts</span>
+            </span>
+          </button>
+          {/*<button
             className="btn btn-primary btn-sm mt-3"
             onClick={() => handleRecibirMensajes()}
           >
             Mensajes
-          </button>
+          </button>*/}
           <button
-            className="btn btn-success btn-sm"
+            className="btn btn-success btn-sm mt-0"
             onClick={() => setshowEnviarMensajeModal(true)}
           >
             Enviar mensaje
@@ -400,19 +409,27 @@ export const Perfil = () => {
                 </h5>
               </div>
               <div className="modal-body">
-                <div className="mensajes-usuarios">
-                  {notificaciones.map((notificacion, index) => (
-                    <div key={index} className="mensaje">
-                      <h6>
-                        <strong>
-                          {notificacion.nombre_emisor}({notificacion.emisor_id}
-                          ):
-                        </strong>
-                        {notificacion.fecha}({notificacion.estado})
-                      </h6>
-                      <p>{notificacion.mensaje}</p>
-                    </div>
-                  ))}
+                <div className="modal-body">
+                  <div className="mensajes-usuarios">
+                    {notificaciones.map((notificacion, index) => (
+                      <div
+                        key={index}
+                        className="mensaje card shadow-sm border-0 mb-3" // Añadido margen para separar las cards
+                        style={{ maxWidth: "400px", margin: "0 auto" }} // Centrado de la card
+                      >
+                        <div className="card-body">
+                          <h6 className="fw-bold mb-1">
+                            {notificacion.nombre_emisor} (
+                            {notificacion.emisor_id}):
+                          </h6>
+                          <small className="text-muted">
+                            {notificacion.fecha} · {notificacion.estado}
+                          </small>
+                          <p className="mt-2">{notificacion.mensaje}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
               <div className="modal-footer">
