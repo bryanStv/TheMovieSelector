@@ -9,7 +9,7 @@ import { useFetchRemoveFollow } from "../../../apis/follows/useFetchRemoveFollow
 import { useFetchChangePassword } from "../../../apis/users/useFetchChangePassword";
 
 export const Perfil = () => {
-  const { user, logout, token } = useAuth();
+  const { user, logout } = useAuth();
   const { users } = useFetchListUsers();
   const { addFollow } = useFetchAddFollow();
   const { removeFollow } = useFetchRemoveFollow();

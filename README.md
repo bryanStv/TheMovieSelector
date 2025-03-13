@@ -36,6 +36,18 @@ CREATE TABLE seguidores (
     FOREIGN KEY (seguido_id) REFERENCES usuarios(id) ON DELETE CASCADE,
     UNIQUE (usuario_id, seguido_id) -- Evita duplicaciones
 );
+
+-- Tabla de notificaciones
+CREATE TABLE notificaciones (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    emisor_id INT NOT NULL,  -- Usuario que envía la notificación
+    receptor_id INT NOT NULL,  -- Usuario que recibe la notificación
+    mensaje TEXT NOT NULL,  -- Mensaje de la notificación
+    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  -- Fecha en la que se crea la notificación
+    estado ENUM('leído', 'no leído') DEFAULT 'no leído',  -- Estado de la notificación
+    FOREIGN KEY (emisor_id) REFERENCES usuarios(id) ON DELETE CASCADE,
+    FOREIGN KEY (receptor_id) REFERENCES usuarios(id) ON DELETE CASCADE
+);
 ```
 
 `conexión mediante DBeaver` : jdbc:mysql://localhost:3300?useSSL=false&allowPublicKeyRetrieval=true
