@@ -7,12 +7,16 @@ export const useFetchChangePassword = () => {
 
   const changePassword = async (usuario, oldPassword, newPassword) => {
     setLoading(true);
+
+    oldPassword = oldPassword.trim();
+    
     try {
       const response = await fetch(
         "http://localhost:3000/api/change-password",
         {
           method: "PATCH",
           headers: {
+            //Authorization: token,
             "Content-Type": "application/json",
           },
           body: JSON.stringify({ usuario, oldPassword, newPassword }),

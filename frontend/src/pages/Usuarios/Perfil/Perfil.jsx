@@ -9,16 +9,17 @@ import { useFetchRemoveFollow } from "../../../apis/follows/useFetchRemoveFollow
 import { useFetchChangePassword } from "../../../apis/users/useFetchChangePassword";
 
 export const Perfil = () => {
-  const { user, logout } = useAuth();
+  const { user, logout, token } = useAuth();
   const { users } = useFetchListUsers();
   const { addFollow } = useFetchAddFollow();
   const { removeFollow } = useFetchRemoveFollow();
   const { checkIfFollowed } = useFetchIsFollowed();
-  const { changePassword,mensaje:mensajePassword } = useFetchChangePassword();
+  const { changePassword } = useFetchChangePassword();
   const [followedUsers, setFollowedUsers] = useState({});
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
   const [newPassword, setNewPassword] = useState("");
+  const [newPasswordVerify,setNewPasswordVerify] = useState("");
   const [viejaPassword, setViejaPassword] = useState("");
 
   if (user === null) {
@@ -31,23 +32,29 @@ export const Perfil = () => {
   };
 
     const handlePasswordChange = (newPassword, viejaPassword) => {
-        console.log("Contraseña vieja:", viejaPassword);
-        console.log("Contraseña nueva:", newPassword);
-        console.log(user.usuario)
-        if (newPassword !== viejaPassword) {
-            changePassword(user.usuario,newPassword,viejaPassword);
-            alert("Contraseña cambiada exitosamente");
-            setShowModal(false);
-        } else {
-            alert("No puedes usar la misma contraseña");
+        //console.log("Contraseña vieja:", viejaPassword);
+        //console.log("Contraseña nueva:", newPassword);
+        //console.log(user.usuario)
+        if (newPassword !== newPasswordVerify) {
+          alert("Las nuevas contraseñas no coinciden");
+          return;
         }
+
+        if (newPassword === viejaPassword) {
+          alert("No puedes usar la misma contraseña");
+          return;
+        }
+
+        changePassword(user.usuario,viejaPassword, newPassword);
+        alert("Contraseña cambiada exitosamente");
+        setShowModal(false);
     };
 
   const checkIfUserIsFollowed = async (idUser, idSeguido) => {
     //console.log(`Comprobando si ${idUser} sigue a ${idSeguido}`);
     const result = await checkIfFollowed(idUser, idSeguido);
     //console.log("Resultado de seguimiento:", result);
-    return result; // Asegúrate de que esto esté devolviendo un valor válido (true/false)
+    return result;
   };
 
   const handleFollow = (idUser, idSeguido) => {
@@ -150,6 +157,17 @@ export const Perfil = () => {
                 </div>
                 <div className="modal-body">
                   <div className="form-group">
+                    <label htmlFor="confirmPassword">Contraseña actual</label>
+                    <input
+                      type="password"
+                      className="form-control"
+                      id="viejaPassword"
+                      value={viejaPassword}
+                      onChange={(e) => setViejaPassword(e.target.value)}
+                      placeholder="Contraseña actual"
+                    />
+                  </div>
+                  <div className="form-group">
                     <label htmlFor="newPassword">Nueva Contraseña</label>
                     <input
                       type="password"
@@ -161,14 +179,14 @@ export const Perfil = () => {
                     />
                   </div>
                   <div className="form-group">
-                    <label htmlFor="confirmPassword">Contraseña actual</label>
+                    <label htmlFor="newPasswordVerify">Confirmar Contraseña</label>
                     <input
                       type="password"
                       className="form-control"
-                      id="viejaPassword"
-                      value={viejaPassword}
-                      onChange={(e) => setViejaPassword(e.target.value)}
-                      placeholder="Contraseña actual"
+                      id="newPasswordVerify"
+                      value={newPasswordVerify}
+                      onChange={(e) => setNewPasswordVerify(e.target.value)}
+                      placeholder="Confirmar nueva contraseña"
                     />
                   </div>
                 </div>
