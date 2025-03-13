@@ -32,9 +32,6 @@ export const Perfil = () => {
   };
 
     const handlePasswordChange = (newPassword, viejaPassword) => {
-        //console.log("Contraseña vieja:", viejaPassword);
-        //console.log("Contraseña nueva:", newPassword);
-        //console.log(user.usuario)
         if (newPassword !== newPasswordVerify) {
           alert("Las nuevas contraseñas no coinciden");
           return;
@@ -77,9 +74,6 @@ export const Perfil = () => {
         const followedStatus = {};
         for (let otheruser of users) {
             const isFollowed = await checkIfUserIsFollowed(user.id, otheruser.id);
-            /*console.log(
-            `Estado de seguimiento de ${otheruser.usuario}: ${isFollowed}`
-            );*/
             followedStatus[otheruser.id] = isFollowed;
         }
         setFollowedUsers(followedStatus);
@@ -126,7 +120,12 @@ export const Perfil = () => {
           style={{ display: "flex", flexDirection: "column" }}
         >
           <button
-            className="btn btn-warning btn-sm mt-3"
+            className="btn btn-success btn-sm mt-3" 
+            onClick={() => setShowModal(true)}> 
+            Enviar mensaje
+          </button>
+          <button
+            className="btn btn-warning btn-sm mt-0"
             onClick={() => setShowModal(true)}
           >
             Cambiar contraseña
@@ -179,7 +178,9 @@ export const Perfil = () => {
                     />
                   </div>
                   <div className="form-group">
-                    <label htmlFor="newPasswordVerify">Confirmar Contraseña</label>
+                    <label htmlFor="newPasswordVerify">
+                      Confirmar Contraseña
+                    </label>
                     <input
                       type="password"
                       className="form-control"

@@ -8,6 +8,8 @@ router.get("/getUserByToken", async (req, res) => {
   res.setHeader("Cache-Control", "no-store");
   const token = req.headers.authorization;
 
+  console.log("Token en getUserByToken: "+token)
+
   if (!token) {
     return res
       .status(401)
@@ -26,6 +28,8 @@ router.get("/getUserByToken", async (req, res) => {
     if (usuarioBD.length === 0) {
       return res.status(404).json({ message: "Usuario no encontrado" });
     }
+
+    //console.log(usuarioBD[0]);
 
     return res.status(200).json({ data: usuarioBD[0] });
   } catch (error) {

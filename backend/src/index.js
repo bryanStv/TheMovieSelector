@@ -33,14 +33,20 @@ app.use(cors());
 app.use(cookieParser())
 
 //APIS IMPORTS
+//Usuarios
 const loginRoute = require("./db/apis/user/login.js")
 const registerRoute = require("./db/apis/user/register.js")
 const changePassRoute = require("./db/apis/user/changePassword.js")
 const usersRoute = require("./db/apis/user/users.js")
 const getUserByToken = require("./db/auth/getUserByToken.js")
+
+//Follows
 const addFollowRoute = require("./db/apis/follows/addFollow.js")
 const removeFollowRoute = require("./db/apis/follows/removeFollow.js")
 const isFollowedRoute = require("./db/apis/follows/isFollowed.js")
+
+//Notificaciones
+const enviarNotificacionRoute = require("./db/apis/notificaciones/enviarNotificacion.js")
 
 //APIS ROUTES
 app.use("/api", loginRoute)
@@ -51,6 +57,7 @@ app.use("/api", getUserByToken)
 app.use("/api", addFollowRoute)
 app.use("/api", isFollowedRoute)
 app.use("/api", removeFollowRoute)
+app.use("/api", enviarNotificacionRoute)
 
 //Rutas
 /*app.get("/users", async (req, res) => {
