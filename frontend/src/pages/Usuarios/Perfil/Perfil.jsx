@@ -47,6 +47,8 @@ export const Perfil = () => {
     }
 
     enviarMensaje(otherIdUser,mensaje,token);
+    setshowEnviarMensajeModal(false);
+    alert("Mensaje enviado correctamente");
   }
 
     const handlePasswordChange = (newPassword, viejaPassword) => {

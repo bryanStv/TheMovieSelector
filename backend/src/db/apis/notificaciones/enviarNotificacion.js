@@ -1,7 +1,5 @@
 const express = require("express");
 const db = require("../../connection");
-const authJWT = require("../../../middlewares/tokenValidation.js");
-const authToken = require("../../auth/getUserByToken.js");
 const {getAuthorization} = require("../../auth/getAuthoritation.js");
 
 const router = express.Router();
