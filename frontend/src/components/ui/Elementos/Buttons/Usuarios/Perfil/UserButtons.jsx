@@ -1,9 +1,14 @@
+import { useFetchNoLeidas } from "../../../../../../apis/notificaciones/useFetchNoLeidas";
+
+
 const UserButtons = ({
   handleRecibirMensajes,
   setshowEnviarMensajeModal,
   setShowModal,
   handleLogout,
 }) => {
+  let { noLeidas } = useFetchNoLeidas()
+  
   return (
     <div
       className="botones-usuario"
@@ -14,9 +19,11 @@ const UserButtons = ({
         onClick={handleRecibirMensajes}
       >
         Mensajes
-        <span className="position-absolute top-0 start-100 translate-middle p-2 bg-success border border-light rounded-circle">
-          <span className="visually-hidden">Nuevos Mensajes</span>
-        </span>
+        {noLeidas && (
+          <span className="position-absolute top-0 start-100 translate-middle p-2 bg-success border border-light rounded-circle">
+            <span className="visually-hidden">Nuevos Mensajes</span>
+          </span>
+        )}
       </button>
       <button
         className="btn btn-success btn-sm mt-0"

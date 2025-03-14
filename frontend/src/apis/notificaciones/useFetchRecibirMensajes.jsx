@@ -65,7 +65,6 @@ export const useFetchRecibirMensajes = () => {
       const data = await response.json();
 
       if (response.ok) {
-        // Actualiza el estado de la notificación en el estado local
         setNotificaciones((prevNotificaciones) =>
           prevNotificaciones.map((notificacion) =>
             notificacion.id === id

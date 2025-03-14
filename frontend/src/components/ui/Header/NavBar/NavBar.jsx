@@ -127,9 +127,6 @@ export const NavBar = () => {
             <span>
               <Link to={enlace} className="btn btn-success position-relative">
                 {user ? user.usuario : "Perfil" }
-                <span className="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle">
-                  <span className="visually-hidden">New alerts</span>
-                </span>
               </Link>
             </span>
           </form>

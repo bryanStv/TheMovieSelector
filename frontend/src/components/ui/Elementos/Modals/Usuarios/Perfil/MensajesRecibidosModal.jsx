@@ -36,13 +36,26 @@ const MensajesRecibidosModal = ({
                     <h6 className="fw-bold mb-1">
                       {notificacion.nombre_emisor} ({notificacion.emisor_id}):
                     </h6>
-                    <small className="text-muted">
+                    <small className="text-muted ">
                       {new Date(notificacion.fecha).toLocaleString()} ·{" "}
+                    </small>
+                    <small
+                      className={
+                        notificacion.estado === "leído"
+                          ? "text-danger"
+                          : "text-success"
+                      }
+                    >
                       {notificacion.estado}
                     </small>
                     <p className="mt-2">{notificacion.mensaje}</p>
                     <button
-                      className="btn btn-primary"
+                      className={
+                        notificacion.estado === "leído"
+                          ? "btn btn-danger btn-sm"
+                          : "btn btn-success btn-sm"
+                      }
+                      //className="btn btn-primary"
                       onClick={() =>
                         cambiarEstadoNotificacion(
                           notificacion.id,
