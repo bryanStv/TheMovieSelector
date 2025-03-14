@@ -24,7 +24,7 @@ export const Perfil = () => {
   const { checkIfFollowed } = useFetchIsFollowed();
   const { changePassword } = useFetchChangePassword();
   const { enviarMensaje } = useFetchEnviarMensaje();
-  const { recibirMensajes, notificaciones } = useFetchRecibirMensajes();
+  const { recibirMensajes, notificaciones, cambiarEstadoNotificacion } = useFetchRecibirMensajes();
   const [followedUsers, setFollowedUsers] = useState({});
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
@@ -198,6 +198,7 @@ export const Perfil = () => {
         show={showRecibidosModal}
         notificaciones={notificaciones}
         onClose={() => setShowRecibidosModal(false)}
+        cambiarEstadoNotificacion={cambiarEstadoNotificacion}
       />
     </div>
   );
