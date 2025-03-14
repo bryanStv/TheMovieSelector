@@ -3,6 +3,11 @@ import { useAuth } from "../../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import UserButtons from "../../../components/ui/Elementos/Buttons/Usuarios/Perfil/UserButtons";
+import ChangePasswordModal from "../../../components/ui/Elementos/Modals/Usuarios/Perfil/ChangePasswordModal";
+import EnviarMensajeModal from "../../../components/ui/Elementos/Modals/Usuarios/Perfil/EnviarMensajeModal";
+import MensajesRecibidosModal from "../../../components/ui/Elementos/Modals/Usuarios/Perfil/MensajesRecibidosModal";
+import { UserTable } from "../../../components/ui/Elementos/DataTables/Usuarios/Perfil/UserTable";
 import { useFetchListUsers } from "../../../apis/useFetchListUsers";
 import { useFetchAddFollow } from "../../../apis/follows/useFetchAddFollow";
 import { useFetchIsFollowed } from "../../../apis/follows/useFetchIsFollowed";
@@ -143,297 +148,57 @@ export const Perfil = () => {
             </p>
           </div>
         </div>
-        <div
-          className="botones-usuario"
-          style={{ display: "flex", flexDirection: "column" }}
-        >
-          <button
-            className="btn btn-primary btn-sm position-relative"
-            onClick={() => handleRecibirMensajes()}
-          >
-            Mensajes
-            <span className="position-absolute top-0 start-100 translate-middle p-2 bg-success border border-light rounded-circle">
-              <span className="visually-hidden">New alerts</span>
-            </span>
-          </button>
-          <button
-            className="btn btn-success btn-sm mt-0"
-            onClick={() => setshowEnviarMensajeModal(true)}
-          >
-            Enviar mensaje
-          </button>
-          <button
-            className="btn btn-warning btn-sm mt-0"
-            onClick={() => setShowModal(true)}
-          >
-            Cambiar contraseña
-          </button>
-          <button
-            className="btn-logout btn btn-sm btn-danger"
-            onClick={handleLogout}
-          >
-            Cerrar sesión
-          </button>
-        </div>
-
-        {showModal && (
-          <div
-            className="modal fade show"
-            style={{ display: "block" }}
-            tabIndex="-1"
-            role="dialog"
-            aria-labelledby="exampleModalLabel"
-            aria-hidden="true"
-          >
-            <div className="modal-dialog" role="document">
-              <div className="modal-content">
-                <div className="modal-header">
-                  <h5 className="modal-title" id="exampleModalLabel">
-                    Cambiar Contraseña
-                  </h5>
-                </div>
-                <div className="modal-body">
-                  <div className="form-group">
-                    <label htmlFor="confirmPassword">Contraseña actual</label>
-                    <input
-                      type="password"
-                      className="form-control"
-                      id="viejaPassword"
-                      value={viejaPassword}
-                      onChange={(e) => setViejaPassword(e.target.value)}
-                      placeholder="Contraseña actual"
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="newPassword">Nueva Contraseña</label>
-                    <input
-                      type="password"
-                      className="form-control"
-                      id="newPassword"
-                      value={newPassword}
-                      onChange={(e) => setNewPassword(e.target.value)}
-                      placeholder="Introduce nueva contraseña"
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="newPasswordVerify">
-                      Confirmar Contraseña
-                    </label>
-                    <input
-                      type="password"
-                      className="form-control"
-                      id="newPasswordVerify"
-                      value={newPasswordVerify}
-                      onChange={(e) => setNewPasswordVerify(e.target.value)}
-                      placeholder="Confirmar nueva contraseña"
-                    />
-                  </div>
-                </div>
-                <div className="modal-footer">
-                  <button
-                    type="button"
-                    className="btn btn-secondary"
-                    onClick={() => setShowModal(false)}
-                  >
-                    Cancelar
-                  </button>
-                  <button
-                    type="button"
-                    className="btn btn-primary"
-                    onClick={() =>
-                      handlePasswordChange(newPassword, viejaPassword)
-                    }
-                  >
-                    Guardar cambios
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
+        <UserButtons
+          handleRecibirMensajes={handleRecibirMensajes}
+          setshowEnviarMensajeModal={setshowEnviarMensajeModal}
+          setShowModal={setShowModal}
+          handleLogout={handleLogout}
+        />
       </div>
       <div
         className="perfil-otros-usuario col-10"
         style={{ maxHeight: "600px", overflowY: "auto" }}
       >
-        <div>
-          <table
-            id="DataTableUsuarios"
-            className="table table-striped"
-            style={{ width: "100%" }}
-          >
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Usuario</th>
-                <th>Email</th>
-                <th>Fecha de registro</th>
-                <th>Seguimiento</th>
-              </tr>
-            </thead>
-            <tbody>
-              {users.map((otheruser, index) => (
-                <tr key={index}>
-                  <td>{otheruser.id}</td>
-                  <td>{otheruser.usuario}</td>
-                  <th>{otheruser.email}</th>
-                  <td>{otheruser.fecha_registro}</td>
-                  <td>
-                    <button
-                      className={`btn ${
-                        followedUsers[otheruser.id]
-                          ? "btn-danger"
-                          : "btn-success"
-                      }`}
-                      onClick={() =>
-                        followedUsers[otheruser.id]
-                          ? handleUnfollow(user.id, otheruser.id)
-                          : handleFollow(user.id, otheruser.id)
-                      }
-                    >
-                      {followedUsers[otheruser.id]
-                        ? "Dejar de seguir"
-                        : "Seguir"}
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-            <tfoot>
-              <tr>
-                <th>ID</th>
-                <th>Usuario</th>
-                <th>Email</th>
-                <th>Fecha de registro</th>
-                <th>Seguimiento</th>
-              </tr>
-            </tfoot>
-          </table>
-        </div>
+        <UserTable
+          users={users}
+          followedUsers={followedUsers}
+          handleFollow={handleFollow}
+          handleUnfollow={handleUnfollow}
+          user={user}
+        />
       </div>
 
       {/* Modal enviar mensajes */}
-      {showEnviarMensajeModal && (
-        <div
-          className="modal fade show"
-          style={{ display: "block" }}
-          tabIndex="-1"
-          role="dialog"
-          aria-labelledby="ModalEnviarMensajes"
-          aria-hidden="true"
-        >
-          <div className="modal-dialog" role="document">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title" id="ModalEnviarMensajes">
-                  Enviar mensaje
-                </h5>
-              </div>
-              <div className="modal-body">
-                <div className="form-group">
-                  <label htmlFor="usuario">Seleccionar Usuario</label>
-                  <select
-                    id="usuario"
-                    className="form-control"
-                    value={selectedUser}
-                    onChange={handleChangeUser}
-                  >
-                    <option value="">Selecciona un usuario</option>
-                    {users.map((otheruser, index) => (
-                      <option key={index} value={otheruser.id}>
-                        {otheruser.usuario} (ID: {otheruser.id})
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div className="form-group">
-                  <label htmlFor="mensaje">Mensaje</label>
-                  <textarea
-                    className="form-control"
-                    id="mensaje"
-                    value={mensaje}
-                    onChange={(e) => setMensaje(e.target.value)}
-                    placeholder="Escribe tu mensaje"
-                    rows={4}
-                    style={{ resize: "none" }}
-                  />
-                </div>
-              </div>
-              <div className="modal-footer">
-                <button
-                  type="button"
-                  className="btn btn-secondary"
-                  onClick={() => setshowEnviarMensajeModal(false)}
-                >
-                  Cancelar
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-primary"
-                  onClick={() => handleEnviarMensaje(selectedUser, mensaje)}
-                >
-                  Guardar cambios
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      <EnviarMensajeModal
+        show={showEnviarMensajeModal}
+        users={users}
+        selectedUser={selectedUser}
+        mensaje={mensaje}
+        handleChangeUser={handleChangeUser}
+        setMensaje={setMensaje}
+        handleEnviarMensaje={handleEnviarMensaje}
+        onClose={() => setshowEnviarMensajeModal(false)}
+      />
+
+      {/* Modal para cambiar contraseña */}
+      <ChangePasswordModal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        viejaPassword={viejaPassword}
+        setViejaPassword={setViejaPassword}
+        newPassword={newPassword}
+        setNewPassword={setNewPassword}
+        newPasswordVerify={newPasswordVerify}
+        setNewPasswordVerify={setNewPasswordVerify}
+        handlePasswordChange={handlePasswordChange}
+      />
 
       {/* Modal mensajes recibidos */}
-      {showRecibidosModal && (
-        <div
-          className="modal fade show"
-          style={{ display: "block" }}
-          tabIndex="-1"
-          role="dialog"
-          aria-labelledby="ModalEnviarMensajes"
-          aria-hidden="true"
-        >
-          <div className="modal-dialog" role="document">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title" id="ModalEnviarMensajes">
-                  Mensajes Recibidos
-                </h5>
-              </div>
-              <div className="modal-body">
-                <div className="modal-body">
-                  <div className="mensajes-usuarios">
-                    {notificaciones.map((notificacion, index) => (
-                      <div
-                        key={index}
-                        className="mensaje card shadow-sm border-0 mb-3"
-                        style={{ maxWidth: "400px", margin: "0 auto" }}
-                      >
-                        <div className="card-body">
-                          <h6 className="fw-bold mb-1">
-                            {notificacion.nombre_emisor} (
-                            {notificacion.emisor_id}):
-                          </h6>
-                          <small className="text-muted">
-                            {notificacion.fecha} · {notificacion.estado}
-                          </small>
-                          <p className="mt-2">{notificacion.mensaje}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-              <div className="modal-footer">
-                <button
-                  type="button"
-                  className="btn btn-secondary"
-                  onClick={() => setShowRecibidosModal(false)}
-                >
-                  Cerrar
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      <MensajesRecibidosModal
+        show={showRecibidosModal}
+        notificaciones={notificaciones}
+        onClose={() => setShowRecibidosModal(false)}
+      />
     </div>
   );
 };

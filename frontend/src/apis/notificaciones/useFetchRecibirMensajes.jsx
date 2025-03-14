@@ -34,12 +34,12 @@ export const useFetchRecibirMensajes = () => {
         if (response.ok) {
         setMessage("Mensaje enviado con exito.");
         } else {
-        console.log("Error 1");
+        //console.log("Error 1");
         setMessage(data.message);
         }
     } catch (error) {
         setError("Error al enviar el mensaje");
-        console.log("Error 2");
+        //console.log("Error 2");
         console.error(error);
     } finally {
         setLoading(false);
@@ -50,7 +50,8 @@ export const useFetchRecibirMensajes = () => {
 }
 
 class Notificacion {
-  constructor(emisor_id,nombre_emisor, mensaje, fecha, estado) {
+  constructor(id,emisor_id,nombre_emisor, mensaje, fecha, estado) {
+    this.id = id;
     this.emisor_id = emisor_id;
     this.nombre_emisor = nombre_emisor;
     this.mensaje = mensaje;
@@ -69,6 +70,7 @@ const procesarNotificaciones = (jsonData) => {
     const notificaciones = jsonData.map(
     (item) =>
         new Notificacion(
+        item.id,
         item.emisor_id,
         item.nombre_emisor,
         item.mensaje,

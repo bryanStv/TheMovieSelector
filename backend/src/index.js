@@ -48,18 +48,23 @@ const isFollowedRoute = require("./db/apis/follows/isFollowed.js")
 //Notificaciones
 const enviarNotificacionRoute = require("./db/apis/notificaciones/enviarNotificacion.js")
 const recibirNotificacionRoute = require("./db/apis/notificaciones/recibirNotificacion.js")
+const notificacionesLeidasRoute = require("./db/apis/notificaciones/notificacionesLeidas.js")
+const cambiarEstadoNotificacionRoute = require("./db/apis/notificaciones/cambiarEstadoNotificacion.js")
 
 //APIS ROUTES
-app.use("/api", loginRoute)
-app.use("/api", registerRoute)
-app.use("/api", changePassRoute)
-app.use("/api", usersRoute)
-app.use("/api", getUserByToken)
-app.use("/api", addFollowRoute)
-app.use("/api", isFollowedRoute)
-app.use("/api", removeFollowRoute)
-app.use("/api", enviarNotificacionRoute)
-app.use("/api", recibirNotificacionRoute)
+const rutaRaiz = "/api"
+app.use(rutaRaiz, loginRoute)
+app.use(rutaRaiz, registerRoute)
+app.use(rutaRaiz, changePassRoute)
+app.use(rutaRaiz, usersRoute)
+app.use(rutaRaiz, getUserByToken)
+app.use(rutaRaiz, addFollowRoute)
+app.use(rutaRaiz, isFollowedRoute)
+app.use(rutaRaiz, removeFollowRoute)
+app.use(rutaRaiz, enviarNotificacionRoute)
+app.use(rutaRaiz, recibirNotificacionRoute)
+app.use(rutaRaiz, notificacionesLeidasRoute)
+app.use(rutaRaiz, cambiarEstadoNotificacionRoute)
 
 //Rutas
 /*app.get("/users", async (req, res) => {
