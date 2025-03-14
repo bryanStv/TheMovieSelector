@@ -9,7 +9,7 @@ export const useFetchRecibirMensajes = () => {
     const { token } = useAuth();
 
     useEffect (() => {
-        console.log("Notificaciones actualizadas: ", notificaciones);
+        //console.log("Notificaciones actualizadas: ", notificaciones);
     },[notificaciones])
 
     const recibirMensajes = async () => {
@@ -30,11 +30,6 @@ export const useFetchRecibirMensajes = () => {
         const data = await response.json();
 
         setNotificaciones(procesarNotificaciones(data.notificaciones))
-
-        //setNotificaciones(data.notificaciones);
-        //const notificaciones = data.notificaciones;
-        //console.log("Datos del fetch mensaje: " + JSON.stringify(data));
-        //console.log("Notificaciones: "+notificaciones)
 
         if (response.ok) {
         setMessage("Mensaje enviado con exito.");

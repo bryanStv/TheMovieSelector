@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom";
 import { useState } from "react";
 
+import { Toaster } from "react-hot-toast";
 import { Header } from "../components/Fixed/Header/Header.jsx";
 import { Footer } from "../components/Fixed/Footer/Footer.jsx";
 import { Favoritas } from "../pages/Favoritas/Favoritas.jsx";
@@ -14,6 +15,7 @@ export const Root = () => {
   return (
     <BuscarProvider>
       <div className="container-fluid d-flex flex-column min-vh-100">
+        <Toaster position="top-right" />
         {locale && <Header onChangeLanguage={setLocale} />}
 
         <div className="row flex-grow-1">

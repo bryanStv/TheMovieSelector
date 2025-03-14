@@ -2,6 +2,7 @@ import "./Perfil.css";
 import { useAuth } from "../../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { useFetchListUsers } from "../../../apis/useFetchListUsers";
 import { useFetchAddFollow } from "../../../apis/follows/useFetchAddFollow";
 import { useFetchIsFollowed } from "../../../apis/follows/useFetchIsFollowed";
@@ -22,10 +23,10 @@ export const Perfil = () => {
   const [followedUsers, setFollowedUsers] = useState({});
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
-  const [showEnviarMensajeModal,setshowEnviarMensajeModal] = useState(false);
-  const [showRecibidosModal,setShowRecibidosModal] = useState(false);
+  const [showEnviarMensajeModal, setshowEnviarMensajeModal] = useState(false);
+  const [showRecibidosModal, setShowRecibidosModal] = useState(false);
   const [newPassword, setNewPassword] = useState("");
-  const [newPasswordVerify,setNewPasswordVerify] = useState("");
+  const [newPasswordVerify, setNewPasswordVerify] = useState("");
   const [viejaPassword, setViejaPassword] = useState("");
   const [selectedUser, setSelectedUser] = useState("");
   const [mensaje, setMensaje] = useState("");
@@ -47,43 +48,37 @@ export const Perfil = () => {
     recibirMensajes();
 
     setShowRecibidosModal(true);
-
-    for (const notificacion of notificaciones) {
-      console.log(notificacion.mensaje)
-    }
-  }
+  };
 
   const handleEnviarMensaje = (otherIdUser, mensaje) => {
-    console.log(otherIdUser+" --> "+mensaje+" Token: "+token)
-    if( !otherIdUser || !mensaje){
-      alert("Debes seleccionar un usuario y escribir un mensaje");
+    if (!otherIdUser || !mensaje) {
+      toast.error("Debes seleccionar un usuario y escribir un mensaje");
+      return;
     }
 
-    enviarMensaje(otherIdUser,mensaje,token);
+    enviarMensaje(otherIdUser, mensaje, token);
     setshowEnviarMensajeModal(false);
-    alert("Mensaje enviado correctamente");
-  }
+    toast.success("Mensaje enviado correctamente");
+  };
 
-    const handlePasswordChange = (newPassword, viejaPassword) => {
-        if (newPassword !== newPasswordVerify) {
-          alert("Las nuevas contraseñas no coinciden");
-          return;
-        }
+  const handlePasswordChange = (newPassword, viejaPassword) => {
+    if (newPassword !== newPasswordVerify) {
+      toast.error("Las nuevas contraseñas no coinciden");
+      return;
+    }
 
-        if (newPassword === viejaPassword) {
-          alert("No puedes usar la misma contraseña");
-          return;
-        }
+    if (newPassword === viejaPassword) {
+      toast.error("No puedes usar la misma contraseña");
+      return;
+    }
 
-        changePassword(user.usuario,viejaPassword, newPassword);
-        alert("Contraseña cambiada exitosamente");
-        setShowModal(false);
-    };
+    changePassword(user.usuario, viejaPassword, newPassword);
+    toast.success("Contraseña cambiada exitosamente");
+    setShowModal(false);
+  };
 
   const checkIfUserIsFollowed = async (idUser, idSeguido) => {
-    //console.log(`Comprobando si ${idUser} sigue a ${idSeguido}`);
     const result = await checkIfFollowed(idUser, idSeguido);
-    //console.log("Resultado de seguimiento:", result);
     return result;
   };
 
@@ -103,14 +98,14 @@ export const Perfil = () => {
     }));
   };
 
-    const fetchFollowedStatus = async () => {
-        const followedStatus = {};
-        for (let otheruser of users) {
-            const isFollowed = await checkIfUserIsFollowed(user.id, otheruser.id);
-            followedStatus[otheruser.id] = isFollowed;
-        }
-        setFollowedUsers(followedStatus);
-    };
+  const fetchFollowedStatus = async () => {
+    const followedStatus = {};
+    for (let otheruser of users) {
+      const isFollowed = await checkIfUserIsFollowed(user.id, otheruser.id);
+      followedStatus[otheruser.id] = isFollowed;
+    }
+    setFollowedUsers(followedStatus);
+  };
 
   useEffect(() => {
     if (users.length > 0) {
@@ -152,7 +147,7 @@ export const Perfil = () => {
           className="botones-usuario"
           style={{ display: "flex", flexDirection: "column" }}
         >
-          <button 
+          <button
             className="btn btn-primary btn-sm position-relative"
             onClick={() => handleRecibirMensajes()}
           >
@@ -161,12 +156,6 @@ export const Perfil = () => {
               <span className="visually-hidden">New alerts</span>
             </span>
           </button>
-          {/*<button
-            className="btn btn-primary btn-sm mt-3"
-            onClick={() => handleRecibirMensajes()}
-          >
-            Mensajes
-          </button>*/}
           <button
             className="btn btn-success btn-sm mt-0"
             onClick={() => setshowEnviarMensajeModal(true)}
@@ -414,8 +403,8 @@ export const Perfil = () => {
                     {notificaciones.map((notificacion, index) => (
                       <div
                         key={index}
-                        className="mensaje card shadow-sm border-0 mb-3" // Añadido margen para separar las cards
-                        style={{ maxWidth: "400px", margin: "0 auto" }} // Centrado de la card
+                        className="mensaje card shadow-sm border-0 mb-3"
+                        style={{ maxWidth: "400px", margin: "0 auto" }}
                       >
                         <div className="card-body">
                           <h6 className="fw-bold mb-1">
