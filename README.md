@@ -48,6 +48,17 @@ CREATE TABLE notificaciones (
     FOREIGN KEY (emisor_id) REFERENCES usuarios(id) ON DELETE CASCADE,
     FOREIGN KEY (receptor_id) REFERENCES usuarios(id) ON DELETE CASCADE
 );
+
+-- Tabla de códigos de verificación
+CREATE TABLE codigos_verificacion (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,               -- ID del usuario que solicita la verificación
+    code VARCHAR(255) NOT NULL,          -- Código de verificación
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- Fecha y hora en que se generó el código
+    expiration TIMESTAMP DEFAULT (CURRENT_TIMESTAMP + INTERVAL 15 MINUTE), -- Expiración del código (15 minutos después)
+    FOREIGN KEY (user_id) REFERENCES usuarios(id), -- Relación con la tabla usuarios
+    UNIQUE (user_id) -- Asegura que solo haya un código por usuario
+);
 ```
 
 `conexión mediante DBeaver` : jdbc:mysql://localhost:3300?useSSL=false&allowPublicKeyRetrieval=true

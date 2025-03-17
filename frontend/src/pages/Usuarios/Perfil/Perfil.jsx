@@ -104,6 +104,7 @@ export const Perfil = () => {
   };
 
   const fetchFollowedStatus = async () => {
+    if (!user) return;
     const followedStatus = {};
     for (let otheruser of users) {
       const isFollowed = await checkIfUserIsFollowed(user.id, otheruser.id);
