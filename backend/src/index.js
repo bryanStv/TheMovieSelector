@@ -53,6 +53,7 @@ const cambiarEstadoNotificacionRoute = require("./db/apis/notificaciones/cambiar
 
 //Mails
 const sendMailRoute = require("./db/apis/emails/sendEmail.js")
+const mailVerifyRoute = require("./db/apis/emails/verificarCodigo.js")
 
 //APIS ROUTES
 const rutaRaiz = "/api"
@@ -69,6 +70,7 @@ app.use(rutaRaiz, recibirNotificacionRoute)
 app.use(rutaRaiz, notificacionesLeidasRoute)
 app.use(rutaRaiz, cambiarEstadoNotificacionRoute)
 app.use(rutaRaiz, sendMailRoute)
+app.use(rutaRaiz, mailVerifyRoute)
 
 //Rutas
 /*app.get("/users", async (req, res) => {
