@@ -16,6 +16,9 @@ router.post("/mail/verifyCode", async(req, res) => {
           .json({ success: false, message: "Unauthorized" });
     }
 
+    console.log("Usuario a validar : "+id);
+    console.log("TOKEN: "+token);
+
     try {
         const query = `
         SELECT * FROM codigos_verificacion 

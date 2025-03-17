@@ -20,12 +20,21 @@ console.log("Escuchando en puerto "+app.get("port"))
 //Middlewares
 app.use(morgan("dev"))
 app.use(express.json()) //Parsear json
+/*const corsOptions = {
+  origin: 'http://localhost:5173',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
+};
+
+app.use(cors(corsOptions));*/
+
 /*app.use(
   cors({
     origin: "http://localhost:5173",
     //origin: "*",
     methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true,
+    //credentials: true,
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );*/

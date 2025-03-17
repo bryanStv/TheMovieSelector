@@ -42,7 +42,7 @@ router.post("/mail/recoverPassword", async(req, res) => {
             <strong>Hola ${usuario},</strong>
             para recuperar tu contraseña, necesitas escribir este código.
             <div style="border: 2px solid black; padding: 10px;">
-                código de verificación:<strong>${codigoVerificacion}</strong>
+                código de verificación: <strong>${codigoVerificacion}</strong>
             </div>
             `;
 
@@ -53,6 +53,7 @@ router.post("/mail/recoverPassword", async(req, res) => {
 
         return res.status(201).json({
           success: true,
+          codigo: codigoVerificacion,
           simulatedEmail: mensaje,
         });
 
