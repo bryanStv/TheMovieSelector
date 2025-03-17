@@ -28,7 +28,7 @@ export const Perfil = () => {
   const [followedUsers, setFollowedUsers] = useState({});
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
-  const [showCodigo, setShowCodigo] = useState(false);
+  //const [showCodigo, setShowCodigo] = useState(false);
   const [showEnviarMensajeModal, setshowEnviarMensajeModal] = useState(false);
   const [showRecibidosModal, setShowRecibidosModal] = useState(false);
   const [newPassword, setNewPassword] = useState("");
