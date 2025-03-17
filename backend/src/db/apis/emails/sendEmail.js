@@ -18,7 +18,7 @@ router.post("/mail/recoverPassword", async(req, res) => {
             return res.status(401).json({ message: "Unauthorized" });
         }
 
-        const codigoVerificacion = generarCodigoVerificacion(conn,id);
+        const codigoVerificacion = await generarCodigoVerificacion(conn,id);
 
 
         const mensaje = {

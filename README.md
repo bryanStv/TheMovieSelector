@@ -59,6 +59,18 @@ CREATE TABLE codigos_verificacion (
     FOREIGN KEY (user_id) REFERENCES usuarios(id), -- Relación con la tabla usuarios
     UNIQUE (user_id) -- Asegura que solo haya un código por usuario
 );
+
+-- EVENTO PARA ELIMINAR EXPIRADOS CADA MIN
+SET GLOBAL event_scheduler = ON;
+
+SHOW VARIABLES LIKE 'event_scheduler';
+
+CREATE EVENT eliminar_codigos_expirados
+ON SCHEDULE EVERY 1 MINUTE
+DO
+BEGIN
+    DELETE FROM codigos_verificacion WHERE expiration <= NOW();
+END;
 ```
 
 `conexión mediante DBeaver` : jdbc:mysql://localhost:3300?useSSL=false&allowPublicKeyRetrieval=true
