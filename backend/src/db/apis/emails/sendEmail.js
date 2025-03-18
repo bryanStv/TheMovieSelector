@@ -39,8 +39,9 @@ router.post("/mail/recoverPassword", async(req, res) => {
             mensaje.subject = `Recuperar la contraseña para el usuario ${usuario}`
             mensaje.text = `Recuperar contraseña para usuario ${usuario}`
             mensaje.html = `
-            <strong>Hola ${usuario},</strong>
-            para recuperar tu contraseña, necesitas escribir este código.
+            <strong>Hola ${usuario}</strong><br>
+            Hemos comprobado que buscas reestablecer tu contraseña<br>
+            Para ello, necesitas escribir este código.<br>
             <div style="border: 2px solid black; padding: 10px;">
                 código de verificación: <strong>${codigoVerificacion}</strong>
             </div>
